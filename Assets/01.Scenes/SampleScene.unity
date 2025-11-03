@@ -267,6 +267,7 @@ GameObject:
   - component: {fileID: 533618386}
   - component: {fileID: 533618385}
   - component: {fileID: 533618387}
+  - component: {fileID: 533618388}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -351,16 +352,47 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533618384}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ad284f9f661f4e4093a3fc6a5b59236, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 3
+  MaxSpeed: 20
+  MinSpeed: 1
+  DashSpeedMultiplier: 1
   MinX: -3
   MaxX: 3
   MinY: -4.5
   MaxY: -1
+  isDash: 0
+  originPosition: {x: 0, y: -3, z: 0}
+  isRecording: 0
+  isReplaying: 0
+--- !u!114 &533618388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533618384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4861c61a06702a048ba1bee6b6427c7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 3
+  MaxSpeed: 20
+  MinSpeed: 1
+  DashSpeedMultiplier: 1
+  MinX: -3
+  MaxX: 3
+  MinY: -4.5
+  MaxY: 1
+  isDash: 0
+  originPosition: {x: 0, y: -3, z: 0}
+  isRecording: 0
+  isReplaying: 0
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
