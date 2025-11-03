@@ -4,50 +4,70 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     // 목표
-    // 키보드 입력에 따라 방향을 구하고 그 방향으로 이동시키고 싶다
-
-    // 구현 순서
-    // 1. 키보드 입력
-    // 2. 방향 구하는 방법
-    // 3. 이동
+    // 1. 키보드 입력에 따라 방향을 구하고 그 방향으로 이동시키고 싶다
+    // 2. Q/E 키로 스피드를 조절하고 싶다.
+    // 3. 특정 영역을 벗어나지 못하게 하고 싶다.
 
     // 필요 속성
-    public float Speed = 0.5f; // 이동 속도
+    [Header("능력치")]
+    public float Speed = 5f; // 이동 속도
 
-    void Start()
-    {
-        
-    }
+    // 이동 제한 범위
+    [Header("이동범위")]
+    public float MinX = -8.5f; // 좌측 경계
+    public float MaxX = 8.5f;  // 우측 경계
+    public float MinY = -4.5f; // 하단 경계
+    public float MaxY = 4.5f;  // 상단 경계
 
     void Update()
     {
-        // 1. 키보드 입력을 감지한다.
-        // 유니티에서는 Input이라고 하는 모듈이 입력에 관한 모든것을 담당
-        float h = Input.GetAxis("Horizontal");    // 수평 입력에 대한 값을 -1, 0, 1로 가져온다
-        float v = Input.GetAxis("Vertical");      // 수직 입력에 대한 값을 -1, 0, 1로 가져온다
+        // 1. 스피드 조작 (Q: 스피드 업, E: 스피드 다운)
+        if (Input.GetKey(KeyCode.Q))
+        {
+            Speed += Time.deltaTime * 3f; // 부드럽게 속도 증가
+        }
+        if (Input.GetKey(KeyCode.E))
+        {
+            Speed -= Time.deltaTime * 3f; // 부드럽게 속도 감소
+        }
+        // 속도가 음수가 되지 않도록 최소값을 0으로 제한
+        Speed = Mathf.Max(0, Speed);
 
-        Debug.Log($"h : {h}, v : {v}");
+        // 2. 키보드 입력을 감지한다.
+        // 벡터: 크기와 방향을 표현하는 물리 개념
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
 
-        // 2. 입력으로부터 방향을 구한다.
-        Vector2 direcrion = new Vector2(h, v);
-        Debug.Log($"direction : {direcrion.x}, {direcrion.y}");
+        // 3. 입력으로부터 방향을 구하고 정규화한다.
+        //    normalized를 사용하여 벡터의 크기를 1로 만들어 대각선 이동 시에도 속도가 일정하게 유지됩니다.
+        Vector2 direction = new Vector2(h, v).normalized;
 
-        // 3. 그 방향으로 이동을 한다.
-        Vector2 position = transform.position; // 현재 위치를 가져온다
+        // 오른쪽  (1,0)
+        // 위쪽  (0,1)
+        // 대각선위오른쪽 (1,1)
 
+        // 3-1. 방향을 크기 1로 만드는 정규화를 한다.
+        // direction.Normalize();
+        // direction = direction.normalized; // 위의 한줄과 동일한 기능
 
-        // 새로운 위치 = 현재 위치 + (방향 * 속력) * 시간
-        // 새로운 위치 = 현재 위치 + 속도 * 시간
-        //       새로운 위치 = 현재 위치 + 방향 * 속도
-        Vector2 newPosition = position + direcrion * Speed * Time.deltaTime;                    // 새로운 위치
+        // 4. 새로운 위치를 계산한다.
+        Vector3 newPosition = transform.position + (Vector3)direction * Speed * Time.deltaTime;
 
-        // Time.deltaTime : 이전 프레임으로부터 현재 프레임까지 시간이 얼마나 흘렀는지.. 나타내는 값
-        // 1초 / FPS 값과 비슷하다.
+        // 5. 새로운 위치를 제한된 영역 내로 보정한다.
+        newPosition.x = Mathf.Clamp(newPosition.x, MinX, MaxX);
+        newPosition.y = Mathf.Clamp(newPosition.y, MinY, MaxY);
 
-        // 이동속도 : 10
-        // 컴퓨터1:  50FPS: Update함수가 1초에  50번 호출 -> 10 *  50 =  500 * Time.deltaTime = 두개의 값이 같아진다
-        // 컴퓨터2: 200FPS: Update함수가 1초에 200번 호출 -> 10 * 200 = 2000 * Time.deltaTime
+        // 6. 보정된 위치로 이동시킨다.
+        transform.position = newPosition;
 
-        transform.position = newPosition;       // 새로운 위치로 이동을 한다
+        // 7. 화면 끝으로 이동 시 반대편에서 나타나게 한다.
+        if (transform.position.x <= MinX)
+        {
+            transform.position = new Vector3(MaxX, transform.position.y, transform.position.z);
+        }
+        else if (transform.position.x >= MaxX)
+        {
+            transform.position = new Vector3(MinX, transform.position.y, transform.position.z);
+        }
     }
 }
