@@ -26,11 +26,18 @@ public class PlayerRecord : MonoBehaviour
 
     [Header("기타")]
     public bool isDash = false; // 대시 상태 여부
-    public Vector3 originPosition = new Vector3(0f, -3f, 0f); // 원점 위치
 
+    [Header("시작 위치")]
+    private Vector3 _originPosition = new Vector3(0f, -3f, 0f); // 원점 위치
+
+    [Header("리플레이")]
     // 리플레이 상태
     public bool isRecording = false; // 리플레이 녹화 상태
     public bool isReplaying = false; // 리플레이 재생 상태
+
+    [Header("총알")]
+    public GameObject bulletPrefab; // 총알 프리팹
+    public Transform bulletSpawnPoint; // 총알 발사 위치
 
     // 입력 프레임 데이터
     [System.Serializable]
@@ -137,15 +144,15 @@ public class PlayerRecord : MonoBehaviour
         {
             // 원점 방향 벡터 계산
             // 원점 방향    =       원점 위치 - 현재 위치.정규화
-            Vector3 toOrigin = (originPosition - transform.position).normalized;
+            Vector3 toOrigin = (_originPosition - transform.position).normalized;
 
             // 원점 방향으로 이동
             transform.Translate(toOrigin * (Speed * DashSpeedMultiplier) * Time.deltaTime);
 
             // 원점에 거의 도달했으면 정확히 고정
-            if (Vector3.Distance(transform.position, originPosition) < 0.1f)
+            if (Vector3.Distance(transform.position, _originPosition) < 0.1f)
             {
-                transform.position = originPosition;
+                transform.position = _originPosition;
             }
         }
 
@@ -216,12 +223,12 @@ public class PlayerRecord : MonoBehaviour
         // 원점 복귀(R)
         if (frame.rHeld)
         {
-            Vector3 toOrigin = (originPosition - transform.position).normalized;
+            Vector3 toOrigin = (_originPosition - transform.position).normalized;
             transform.Translate(toOrigin * (Speed * DashSpeedMultiplier) * frame.deltaTime);
 
-            if (Vector3.Distance(transform.position, originPosition) < 0.1f)
+            if (Vector3.Distance(transform.position, _originPosition) < 0.1f)
             {
-                transform.position = originPosition;
+                transform.position = _originPosition;
             }
         }
 
