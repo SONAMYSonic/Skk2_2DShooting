@@ -29,5 +29,6 @@ public class Enemy : MonoBehaviour
     public void Hit(float damage)
     {
         _health -= damage;
+        Debug.Log("남은 체력 " + _health);
     }
 }

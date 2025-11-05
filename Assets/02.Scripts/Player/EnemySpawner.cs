@@ -11,11 +11,13 @@ public class EnemySpawner : MonoBehaviour
     [Header("생성 주기")]
     public float SpawnInterval = 2f;
     private float _timer;
+    public float RandomRangeMin = 1f;
+    public float RandomRangeMax = 3f;
 
     private void Start()
     {
         // 쿨타임을 1과 2 사이로 랜덤하게 저장한다.
-        float randomCoolTime = UnityEngine.Random.Range(1f, 3f);
+        float randomCoolTime = UnityEngine.Random.Range(RandomRangeMin, RandomRangeMax);
         SpawnInterval = randomCoolTime;
     }
 

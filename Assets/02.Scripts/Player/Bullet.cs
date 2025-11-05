@@ -84,9 +84,9 @@ public class Bullet : MonoBehaviour
             Enemy enemy = collision.gameObject.GetComponentInParent<Enemy>();
             Debug.Log("빗맞았다!");
             if (is_SubBullet == false)  // 빗맞은 메인 총알
-                enemy.GetComponent<Enemy>().Hit(_damage_Main / SideDamageMultiplier); // 적 체력 메인
+                enemy.GetComponent<Enemy>().Hit(_damage_Main * SideDamageMultiplier); // 적 체력 메인
             else  // 빗맞은 서브 총알
-                enemy.GetComponent<Enemy>().Hit(_damage_Sub / SideDamageMultiplier); // 적 체력 서브
+                enemy.GetComponent<Enemy>().Hit(_damage_Sub * SideDamageMultiplier); // 적 체력 서브
         }
 
         Destroy(gameObject); // 총알 파괴
