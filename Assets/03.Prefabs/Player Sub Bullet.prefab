@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 1369530612147135394}
   - component: {fileID: 2337848164412332547}
   - component: {fileID: 9034438152062986524}
+  - component: {fileID: 9022524995700103354}
+  - component: {fileID: -5941917746134462199}
   m_Layer: 0
   m_Name: Player Sub Bullet
   m_TagString: Untagged
@@ -95,12 +97,74 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5525987523712991624}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78d751d4260c6364a9b9616b776a3baa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startSpeed: 1
-  endSpeed: 14
-  duration: 0.5
+  StartSpeed: 1
+  EndSpeed: 7
+  Duration: 1.2
+  is_S_mode: 0
+  is_Spiral_mode: 0
   _speed: 0
+--- !u!58 &9022524995700103354
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5525987523712991624}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.49999997
+--- !u!114 &-5941917746134462199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5525987523712991624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf0989cf9b0eeb54283157c4662524cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 1
+  MaxSpeed: 7
+  ZeroToMaxSpeed: 1.2
+  InitialSpeed: 1
+  is_S_mode: 0
+  is_Spiral_mode: 0
+  Frequency: 5
+  Magnitude: 0.3
+  SpiralRadius: 0.5
+  SpiralAngularSpeed: 5
+  is_SubBullet: 1
+  basePos: {x: 0, y: 0, z: 0}

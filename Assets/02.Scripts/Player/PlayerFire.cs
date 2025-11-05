@@ -67,7 +67,6 @@ public class PlayerFire : MonoBehaviour
         Instantiate(BulletPrefab, FirePosition.position - new Vector3(0.25f, 0f, 0f), FirePosition.rotation);
         // 총알 발사 위치에서 x +0.25만큼 떨어진 곳에서 두번째 총알 생성
         Instantiate(BulletPrefab, FirePosition.position + new Vector3(0.25f, 0f, 0f), FirePosition.rotation);
-
     }
 
     private void SubFireBullet()
