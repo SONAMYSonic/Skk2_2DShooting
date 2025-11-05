@@ -7,11 +7,11 @@ public class PlayerStats : MonoBehaviour
 
     public void Hit(float damage)
     {
-        if (_playerLife > 1)
+        if (_playerLife > 1)    // 남은 생명이 1 이상일 때
         {
             _playerLife--;
         }
-        else
+        else    // 죽음 ㅋㅋㅋㅋ
         {
             Debug.Log("꽥!");
             Destroy(gameObject);

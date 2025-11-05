@@ -10,13 +10,13 @@ public class EnemySpawner : MonoBehaviour
 
     [Header("생성 주기")]
     public float SpawnInterval = 2f;
-    private float _timer;
     public float RandomRangeMin = 1f;
     public float RandomRangeMax = 3f;
+    private float _timer;
 
     private void Start()
     {
-        // 쿨타임을 1과 2 사이로 랜덤하게 저장한다.
+        // 쿨타임을 RandomRangeMin과 RandomRangeMax 사이로 랜덤하게 저장한다.
         float randomCoolTime = UnityEngine.Random.Range(RandomRangeMin, RandomRangeMax);
         SpawnInterval = randomCoolTime;
     }
@@ -24,17 +24,19 @@ public class EnemySpawner : MonoBehaviour
     private void Update()
     {
         _timer += Time.deltaTime;
+
         if (_timer >= SpawnInterval)
         {
             SpawnEnemy();
             _timer = 0f;
             // 다음 스폰 간격을 다시 랜덤하게 설정
-            SpawnInterval = UnityEngine.Random.Range(1f, 3f);
+            SpawnInterval = UnityEngine.Random.Range(RandomRangeMin, RandomRangeMax);
         }
     }
 
     private void SpawnEnemy()
     {
+        //Quaternion.identity -> 회전값이 없는 상태
         Instantiate(EnemyPrefab, transform.position, Quaternion.identity);
     }
 }

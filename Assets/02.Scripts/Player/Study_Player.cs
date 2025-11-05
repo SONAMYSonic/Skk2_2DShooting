@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Player_Sudy : MonoBehaviour
+public class Study_Player : MonoBehaviour
 {
     private float _health = 3;
 
