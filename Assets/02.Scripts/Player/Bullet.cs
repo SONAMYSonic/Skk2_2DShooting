@@ -20,6 +20,7 @@ public class Bullet : MonoBehaviour
 
     [Header("총알 속성")]
     public bool is_SubBullet = false; // 서브 총알 여부
+    public float SideDamageMultiplier = 0.5f; // 빗맞은 총알 데미지 배율
 
     [Header("총알 데미지")]
     private float _damage_Main = 60f; // 메인 총알 데미지
@@ -65,17 +66,29 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // 총알은 Enemy와만 충돌 이벤트를 처리한다.
-        if (collision.CompareTag("Enemy") == false)
+        if ((collision.CompareTag("Enemy") || collision.CompareTag("EnemySide")) == false)
             return;
 
-        // 내가 메인 총알이면
-        if (is_SubBullet == false)
-            collision.gameObject.GetComponent<Enemy>().Hit(_damage_Main); // 적 체력 메인
+        if (collision.CompareTag("Enemy") == true)
+        {
+            Debug.Log("명중했다!");
+            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+            if (is_SubBullet == false)
+                enemy.GetComponent<Enemy>().Hit(_damage_Main);
+            else
+                enemy.GetComponent<Enemy>().Hit(_damage_Sub);
+        }
 
-        // 내가 서브 총알이면
-        if (is_SubBullet == true)
-            collision.gameObject.GetComponent<Enemy>().Hit(_damage_Sub); // 적 체력 서브
-    
+        if (collision.CompareTag("EnemySide") == true)
+        {
+            Enemy enemy = collision.gameObject.GetComponentInParent<Enemy>();
+            Debug.Log("빗맞았다!");
+            if (is_SubBullet == false)  // 빗맞은 메인 총알
+                enemy.GetComponent<Enemy>().Hit(_damage_Main / SideDamageMultiplier); // 적 체력 메인
+            else  // 빗맞은 서브 총알
+                enemy.GetComponent<Enemy>().Hit(_damage_Sub / SideDamageMultiplier); // 적 체력 서브
+        }
+
         Destroy(gameObject); // 총알 파괴
     }
 
@@ -94,6 +107,4 @@ public class Bullet : MonoBehaviour
 
         transform.position = basePos + new Vector3(offsetX, offsetY, 0f); // 기준 위치 + 원형 오프셋
     }
-
-
 }

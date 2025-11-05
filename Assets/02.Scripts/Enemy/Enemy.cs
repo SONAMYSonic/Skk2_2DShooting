@@ -18,9 +18,7 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("충돌시작");
-
-        if (!collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") == false)
             return;
 
         collision.GetComponent<PlayerStats>().Hit(Damage);
