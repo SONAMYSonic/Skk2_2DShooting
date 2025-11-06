@@ -6,9 +6,10 @@ public class EnemySpawner : MonoBehaviour
     // 과제 3. 일정 시간마다 자신의 위치에 적을 생성
 
     [Header("적 프리팹")]
-    public GameObject EnemyPrefab;
+    public GameObject EnemyPrefab_Straight;
+    public GameObject EnemyPrefab_Trace;
 
-    [Header("생성 주기")]
+    [Header("생성 주기 (Float)")]
     public float SpawnInterval = 2f;
     public float RandomRangeMin = 1f;
     public float RandomRangeMax = 3f;
@@ -28,15 +29,18 @@ public class EnemySpawner : MonoBehaviour
         if (_timer >= SpawnInterval)
         {
             SpawnEnemy();
-            _timer = 0f;
-            // 다음 스폰 간격을 다시 랜덤하게 설정
-            SpawnInterval = UnityEngine.Random.Range(RandomRangeMin, RandomRangeMax);
         }
     }
 
+    // 30% 확률로 추적 적 생성, 70% 확률로 직진 적 생성
     private void SpawnEnemy()
     {
-        //Quaternion.identity -> 회전값이 없는 상태
-        Instantiate(EnemyPrefab, transform.position, Quaternion.identity);
+        float randomValue = Random.Range(0f, 1f);
+        // 30% 확률(0.3f 보다 작을 때)로 추적 적 생성, 70% 확률로 직진 적 생성
+        GameObject enemyToSpawn = randomValue < 0.3f ? EnemyPrefab_Trace : EnemyPrefab_Straight;
+        Instantiate(enemyToSpawn, transform.position, Quaternion.identity);
+        _timer = 0f;    // 타이머 초기화
+        // 다음 스폰 간격을 다시 랜덤하게 설정
+        SpawnInterval = UnityEngine.Random.Range(RandomRangeMin, RandomRangeMax);
     }
 }
