@@ -6,7 +6,6 @@ public class EnemyMove : MonoBehaviour
     [Header("본인 능력치")]
     private Enemy _enemy;
 
-    /*
     public enum EEnemyType
     {
         Straight,
@@ -15,7 +14,7 @@ public class EnemyMove : MonoBehaviour
     }
     [Header("적 움직임 방식")]
     public EEnemyType Type;
-    */
+    
 
     private void Start()
     {
@@ -25,7 +24,7 @@ public class EnemyMove : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         GoStraight();
 

@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     public float Damage = 1;
     private float _health = 100f;
 
-    void Update()
+    private void Update()
     {
         if (_health <= 0)
             Destroy(gameObject);
