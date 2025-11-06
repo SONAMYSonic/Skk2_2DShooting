@@ -113,22 +113,5 @@ public class PlayerMove : MonoBehaviour
                 transform.position = originPosition;        // 정확히 원점으로 위치 보정
             }
         }
-
-        // 9. 리플레이 기능 구현
-        // 사용자의 입력을 녹화하고 재생하는 기능
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            isRecording = !isRecording; // 녹화 상태 토글
-            if (isRecording)
-            {
-                Debug.Log("리플레이 녹화 시작");
-                // 녹화 시작 시 초기화 작업 수행
-            }
-            else
-            {
-                Debug.Log("리플레이 녹화 종료");
-                // 녹화 종료 시 저장 작업 수행
-            }
-        }
     }
 }

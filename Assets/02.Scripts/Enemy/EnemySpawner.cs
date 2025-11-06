@@ -8,6 +8,8 @@ public class EnemySpawner : MonoBehaviour
     [Header("적 프리팹")]
     public GameObject EnemyPrefab_Straight;
     public GameObject EnemyPrefab_Trace;
+    public GameObject EnemyPrefab_Zigzag;
+    public GameObject EnemyPrefab_BrakeAcc;
 
     [Header("생성 주기 (Float)")]
     public float SpawnInterval = 2f;
@@ -15,16 +17,29 @@ public class EnemySpawner : MonoBehaviour
     public float RandomRangeMax = 3f;
     private float _timer;
 
+    [Header("디버그")]
+    public bool IsDebugMode = false;
+
+    [Header("디버그: 생성할 적 움직임 방식")]
+    public GameObject DebugEnemyPrefab;
+
     private void Start()
     {
         // 쿨타임을 RandomRangeMin과 RandomRangeMax 사이로 랜덤하게 저장한다.
         float randomCoolTime = UnityEngine.Random.Range(RandomRangeMin, RandomRangeMax);
         SpawnInterval = randomCoolTime;
+
     }
 
     private void Update()
     {
         _timer += Time.deltaTime;
+
+        if (IsDebugMode && _timer >= SpawnInterval)
+        {
+            DebugSpawn();
+            return;
+        }
 
         if (_timer >= SpawnInterval)
         {
@@ -41,6 +56,13 @@ public class EnemySpawner : MonoBehaviour
         Instantiate(enemyToSpawn, transform.position, Quaternion.identity);
         _timer = 0f;    // 타이머 초기화
         // 다음 스폰 간격을 다시 랜덤하게 설정
+        SpawnInterval = UnityEngine.Random.Range(RandomRangeMin, RandomRangeMax);
+    }
+
+    private void DebugSpawn()
+    {
+        Instantiate(DebugEnemyPrefab, transform.position, Quaternion.identity);
+        _timer = 0f;
         SpawnInterval = UnityEngine.Random.Range(RandomRangeMin, RandomRangeMax);
     }
 }
