@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8647156989036638548}
   - component: {fileID: 3416483289037918441}
   - component: {fileID: 5056500030743730300}
+  - component: {fileID: -4846158639358787284}
   m_Layer: 0
   m_Name: SpeedItemObject
   m_TagString: Untagged
@@ -138,3 +139,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpeedBoost: 2
+--- !u!114 &-4846158639358787284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997262363980530098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b10ea51e6c7f0d2438c109a82a3cc64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveSpeed: 5
+  DelayTime: 2
+  _duration: 1.5
+  BezierHeight: 2

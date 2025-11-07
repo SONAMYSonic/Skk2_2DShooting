@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4005620359096373798}
   - component: {fileID: 2799389399224493556}
   - component: {fileID: 2972683274808894108}
+  - component: {fileID: 6995525373701573348}
   m_Layer: 0
   m_Name: AttackSpeedItemObject
   m_TagString: Untagged
@@ -138,3 +139,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttackSpeedAmount: 0.5
+--- !u!114 &6995525373701573348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2275193764794265023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b10ea51e6c7f0d2438c109a82a3cc64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveSpeed: 5
+  DelayTime: 2
+  _duration: 1.5
+  BezierHeight: 2
