@@ -28,8 +28,11 @@ public class PlayerMove : MonoBehaviour
     public bool isRecording = false; // 리플레이 녹화 상태
     public bool isReplaying = false; // 리플레이 재생 상태
 
-    void Update()
+    private void Update()
     {
+
+
+        /*
         // 1. 스피드 조작 (Q: 스피드 업, E: 스피드 다운)
         if (Input.GetKey(KeyCode.Q))
         {
@@ -39,8 +42,10 @@ public class PlayerMove : MonoBehaviour
         {
             Speed -= Time.deltaTime * 3f; // 부드럽게 속도 감소
         }
+        
         // Speed를 MinSpeed와 MaxSpeed 사이로 제한
         Speed = Mathf.Clamp(Speed, MinSpeed, MaxSpeed);
+        */
 
         // 1-1. Shift 키를 누르고 있으면 속도가 1.2배가 된다.
         if (Input.GetKeyDown(KeyCode.LeftShift) && isDash == false)
@@ -113,5 +118,11 @@ public class PlayerMove : MonoBehaviour
                 transform.position = originPosition;        // 정확히 원점으로 위치 보정
             }
         }
+    }
+
+    public void Boost(float speedBoost)
+    {
+        // 아이템을 통해 스피드를 증가시키는 메서드
+        Speed += speedBoost;
     }
 }

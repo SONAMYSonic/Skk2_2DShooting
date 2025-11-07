@@ -12,10 +12,10 @@ public class PlayerRecord : MonoBehaviour
 
     // 필요 속성
     [Header("능력치")]
-    public float Speed = 3f; // 이동 속도
     public float MaxSpeed = 20f; // 최대 이동 속도
     public float MinSpeed = 1f;  // 최소 이동 속도
     public float DashSpeedMultiplier = 1f; // 대시 시 속도 배율
+    private float _speed = 3f; // 이동 속도
 
     // 이동 제한 범위
     [Header("이동범위")]
@@ -92,11 +92,11 @@ public class PlayerRecord : MonoBehaviour
         bool qHeld = Input.GetKey(KeyCode.Q);
         bool eHeld = Input.GetKey(KeyCode.E);
 
-        if (qHeld) Speed += Time.deltaTime * 10f; // 부드럽게 속도 증가
-        if (eHeld) Speed -= Time.deltaTime * 10f; // 부드럽게 속도 감소
+        if (qHeld) _speed += Time.deltaTime * 10f; // 부드럽게 속도 증가
+        if (eHeld) _speed -= Time.deltaTime * 10f; // 부드럽게 속도 감소
 
         // Speed를 MinSpeed와 MaxSpeed 사이로 제한
-        Speed = Mathf.Clamp(Speed, MinSpeed, MaxSpeed);
+        _speed = Mathf.Clamp(_speed, MinSpeed, MaxSpeed);
 
         // 1-1. Shift 키를 누르고 있으면 대시 상태 토글
         if (Input.GetKeyDown(KeyCode.LeftShift) && isDash == false)
@@ -120,7 +120,7 @@ public class PlayerRecord : MonoBehaviour
         Vector2 direction = new Vector2(h, v).normalized;
 
         // 4. 새로운 위치를 계산한다.
-        Vector3 newPosition = transform.position + (Vector3)direction * (Speed * DashSpeedMultiplier) * Time.deltaTime;
+        Vector3 newPosition = transform.position + (Vector3)direction * (_speed * DashSpeedMultiplier) * Time.deltaTime;
 
         // 5. 새로운 위치를 제한된 영역 내로 보정한다.
         newPosition.x = Mathf.Clamp(newPosition.x, MinX, MaxX);
@@ -147,7 +147,7 @@ public class PlayerRecord : MonoBehaviour
             Vector3 toOrigin = (_originPosition - transform.position).normalized;
 
             // 원점 방향으로 이동
-            transform.Translate(toOrigin * (Speed * DashSpeedMultiplier) * Time.deltaTime);
+            transform.Translate(toOrigin * (_speed * DashSpeedMultiplier) * Time.deltaTime);
 
             // 원점에 거의 도달했으면 정확히 고정
             if (Vector3.Distance(transform.position, _originPosition) < 0.1f)
@@ -185,9 +185,9 @@ public class PlayerRecord : MonoBehaviour
         var frame = recordedFrames[replayIndex];
 
         // 스피드 조작(Q/E)
-        if (frame.qHeld) Speed += frame.deltaTime * 3f;
-        if (frame.eHeld) Speed -= frame.deltaTime * 3f;
-        Speed = Mathf.Clamp(Speed, MinSpeed, MaxSpeed);
+        if (frame.qHeld) _speed += frame.deltaTime * 3f;
+        if (frame.eHeld) _speed -= frame.deltaTime * 3f;
+        _speed = Mathf.Clamp(_speed, MinSpeed, MaxSpeed);
 
         // Shift 대시 토글(에지 검출)
         if (frame.shiftHeld && !prevReplayShiftHeld)
@@ -204,7 +204,7 @@ public class PlayerRecord : MonoBehaviour
 
         // 이동
         Vector2 direction = new Vector2(frame.h, frame.v).normalized;
-        Vector3 newPosition = transform.position + (Vector3)direction * (Speed * DashSpeedMultiplier) * frame.deltaTime;
+        Vector3 newPosition = transform.position + (Vector3)direction * (_speed * DashSpeedMultiplier) * frame.deltaTime;
 
         newPosition.x = Mathf.Clamp(newPosition.x, MinX, MaxX);
         newPosition.y = Mathf.Clamp(newPosition.y, MinY, MaxY);
@@ -224,7 +224,7 @@ public class PlayerRecord : MonoBehaviour
         if (frame.rHeld)
         {
             Vector3 toOrigin = (_originPosition - transform.position).normalized;
-            transform.Translate(toOrigin * (Speed * DashSpeedMultiplier) * frame.deltaTime);
+            transform.Translate(toOrigin * (_speed * DashSpeedMultiplier) * frame.deltaTime);
 
             if (Vector3.Distance(transform.position, _originPosition) < 0.1f)
             {
@@ -244,7 +244,7 @@ public class PlayerRecord : MonoBehaviour
         replayIndex = 0;
 
         recordedStartPosition = transform.position;
-        recordedStartSpeed = Speed;
+        recordedStartSpeed = _speed;
         recordedStartDash = isDash;
         prevReplayShiftHeld = recordedStartDash;
 
@@ -271,7 +271,7 @@ public class PlayerRecord : MonoBehaviour
 
         // 녹화 시작 시점 상태로 복원 후 재생
         transform.position = recordedStartPosition;
-        Speed = recordedStartSpeed;
+        _speed = recordedStartSpeed;
         isDash = recordedStartDash;
         DashSpeedMultiplier = isDash ? 2f : 1f;
         prevReplayShiftHeld = recordedStartDash;
@@ -283,5 +283,11 @@ public class PlayerRecord : MonoBehaviour
     {
         isReplaying = false;
         Debug.Log("리플레이 재생 종료");
+    }
+
+    public void Boost(float amount)
+    {
+        _speed += amount;
+        Debug.Log("아이템을 먹었다!");
     }
 }
