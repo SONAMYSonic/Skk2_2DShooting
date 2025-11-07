@@ -63,7 +63,7 @@ public class PlayerRecord : MonoBehaviour
     private bool recordedStartDash;             // 녹화 시작 대시 상태
     private bool prevReplayShiftHeld = false;   // 리플레이 중 Shift 키 이전 상태
 
-    void Update()
+    private void Update()
     {
         // 리플레이 토글
         if (Input.GetKeyDown(KeyCode.Y))
@@ -290,4 +290,6 @@ public class PlayerRecord : MonoBehaviour
         _speed += amount;
         Debug.Log("아이템을 먹었다!");
     }
+
+
 }

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8667623559164472013}
   - component: {fileID: 7357762629413359275}
   - component: {fileID: 8035270902412268335}
+  - component: {fileID: 3847559963730559207}
   m_Layer: 0
   m_Name: Enemy_Zigzag
   m_TagString: Enemy
@@ -192,6 +193,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 2
+--- !u!114 &3847559963730559207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680321306092405002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abf420035ef40e849a49dc9a63756a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ItemPrefabs:
+  - {fileID: 8716667346965400862, guid: 0f70442c19aa5594d81176e315eb406f, type: 3}
+  - {fileID: 997262363980530098, guid: 7869ef11f47623341a4f65d57e81727e, type: 3}
+  - {fileID: 2275193764794265023, guid: e0db4b4f2fcc40444b43b5f6c54352bb, type: 3}
+  DropChance: 0.5
+  DropRateHealth: 0.7
+  DropRateSpeed: 0.2
+  DropRateAttackSpeed: 0.1
 --- !u!1 &2520886059892005089
 GameObject:
   m_ObjectHideFlags: 0

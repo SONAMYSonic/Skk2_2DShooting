@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Item : MonoBehaviour
+public class ItemSpeed : MonoBehaviour
 {
     // 충돌 트리거가 일어났을때
     // 만약 플레이어 태그라면

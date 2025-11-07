@@ -18,4 +18,10 @@ public class PlayerStats : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public void HealthUP(float amount)
+    {
+        _playerLife += amount;
+        Debug.Log("체력 상승!");
+    }
 }

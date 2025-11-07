@@ -28,7 +28,7 @@ public class PlayerFire : MonoBehaviour
     public Transform SubFirePositionRight; // 보조 총알 발사 위치
 
     [Header("발사 쿨타임")]
-    public const float FireCooldown = 0.6f; // 발사 쿨타임
+    private float _fireCooldown = 0.6f; // 발사 쿨타임
     private float _fireCooldownTimer = 0f; // 쿨타임 타이머
 
     [Header("자동 발사 모드")]
@@ -57,7 +57,7 @@ public class PlayerFire : MonoBehaviour
         {
             FireBullet();
             SubFireBullet();
-            _fireCooldownTimer = FireCooldown; // 쿨타임 초기화
+            _fireCooldownTimer = _fireCooldown; // 쿨타임 초기화
         }
     }
 
@@ -73,5 +73,12 @@ public class PlayerFire : MonoBehaviour
     {
         Instantiate(SubBulletPrefab, SubFirePositionLeft.position, FirePosition.rotation);
         Instantiate(SubBulletPrefab, SubFirePositionRight.position, FirePosition.rotation);
+    }
+
+    public void AttackSpeedUP(float amount)
+    {
+        // 발사 쿨타임 감소 연산
+        _fireCooldown *= amount;
+        Debug.Log("공격 속도 상승!");
     }
 }
