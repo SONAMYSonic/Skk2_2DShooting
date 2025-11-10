@@ -151,7 +151,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b10ea51e6c7f0d2438c109a82a3cc64e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 5
+  MoveDuration: 1
   DelayTime: 2
-  _duration: 1.5
-  BezierHeight: 2
+  BezierHeight: 2.5

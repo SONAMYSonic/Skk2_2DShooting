@@ -10,87 +10,77 @@ public class PlayerMove : MonoBehaviour
 
     // 필요 속성
     [Header("능력치")]
-    public float Speed = 5f; // 이동 속도
-    public float MaxSpeed = 20f; // 최대 이동 속도
-    public float MinSpeed = 1f;  // 최소 이동 속도
+    public float MaxSpeed = 20f;          // 최대 이동 속도
+    public float MinSpeed = 1f;           // 최소 이동 속도
     public float DashSpeedMultiplier = 1f; // 대시 시 속도 배율
+    [SerializeField]
+    private float _speed = 3f;            // 현재 이동 속도
 
-    // 이동 제한 범위
     [Header("이동범위")]
-    public float MinX = -8.5f; // 좌측 경계
-    public float MaxX = 8.5f;  // 우측 경계
+    public float MinX = -3f;   // 좌측 경계
+    public float MaxX = 3f;    // 우측 경계
     public float MinY = -4.5f; // 하단 경계
-    public float MaxY = 4.5f;  // 상단 경계
+    public float MaxY = 1f;    // 상단 경계
 
     [Header("기타")]
     public bool isDash = false; // 대시 상태 여부
-    public Vector3 originPosition = new Vector3(0f, -3f, 0f); // 원점 위치
-    public bool isRecording = false; // 리플레이 녹화 상태
-    public bool isReplaying = false; // 리플레이 재생 상태
 
-    private void Update()
+    [Header("시작 위치")]
+    [SerializeField]
+    private Vector3 _originPosition = new Vector3(0f, -3f, 0f); // 원점 위치
+
+    // Speed를 리플레이에서 건드릴 수 있도록 프로퍼티로 노출
+    public float Speed
     {
+        get => _speed;
+        set => _speed = value;
+    }
 
-
-        /*
+    // 한 프레임 동안 들어온 입력을 기준으로 플레이어를 움직인다.
+    public void ApplyInput(
+        float deltaTime,
+        float h,
+        float v,
+        bool qHeld,
+        bool eHeld,
+        bool shiftDown,
+        bool shiftUp,
+        bool rHeld)
+    {
         // 1. 스피드 조작 (Q: 스피드 업, E: 스피드 다운)
-        if (Input.GetKey(KeyCode.Q))
-        {
-            Speed += Time.deltaTime * 3f; // 부드럽게 속도 증가
-        }
-        if (Input.GetKey(KeyCode.E))
-        {
-            Speed -= Time.deltaTime * 3f; // 부드럽게 속도 감소
-        }
-        
-        // Speed를 MinSpeed와 MaxSpeed 사이로 제한
-        Speed = Mathf.Clamp(Speed, MinSpeed, MaxSpeed);
-        */
+        if (qHeld) _speed += deltaTime * 10f; // 부드럽게 속도 증가
+        if (eHeld) _speed -= deltaTime * 10f; // 부드럽게 속도 감소
 
-        // 1-1. Shift 키를 누르고 있으면 속도가 1.2배가 된다.
-        if (Input.GetKeyDown(KeyCode.LeftShift) && isDash == false)
+        // Speed를 MinSpeed와 MaxSpeed 사이로 제한
+        _speed = Mathf.Clamp(_speed, MinSpeed, MaxSpeed);
+
+        // 1-1. Shift 키 "에지" 기반 대시 토글
+        if (shiftDown && isDash == false)
         {
-            // 대시 상태로 변경
             isDash = true;
             DashSpeedMultiplier = 2f;
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift) && isDash == true)
+        else if (shiftUp && isDash == true)
         {
-            // 대시 상태 해제
             isDash = false;
             DashSpeedMultiplier = 1f;
         }
 
-        // 2. 키보드 입력을 감지한다.
-        // 벡터: 크기와 방향을 표현하는 물리 개념
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
-
-        // 3. 입력으로부터 방향을 구하고 정규화한다.
-        //    normalized를 사용하여 벡터의 크기를 1로 만들어 대각선 이동 시에도 속도가 일정하게 유지됩니다.
+        // 2. 입력으로부터 방향을 구하고 정규화
         Vector2 direction = new Vector2(h, v).normalized;
 
-        // 오른쪽  (1,0)
-        // 위쪽  (0,1)
-        // 대각선위오른쪽 (1,1)
+        // 3. 새로운 위치 계산
+        Vector3 newPosition = transform.position +
+                              (Vector3)direction * (_speed * DashSpeedMultiplier) * deltaTime;
 
-        // 3-1. 방향을 크기 1로 만드는 정규화를 한다.
-        // direction.Normalize();
-        // direction = direction.normalized; // 위의 한줄과 동일한 기능
-
-        //transform.Translate((Vector3)direction * Speed * Time.deltaTime); // 방향 * 속도 * 시간
-
-        // 4. 새로운 위치를 계산한다.
-        Vector3 newPosition = transform.position + (Vector3)direction * (Speed * DashSpeedMultiplier) * Time.deltaTime;
-
-        // 5. 새로운 위치를 제한된 영역 내로 보정한다.
+        // 4. 제한된 영역 내로 보정
         newPosition.x = Mathf.Clamp(newPosition.x, MinX, MaxX);
         newPosition.y = Mathf.Clamp(newPosition.y, MinY, MaxY);
 
-        // 6. 보정된 위치로 이동시킨다.
+        // 5. 보정된 위치로 이동
         transform.position = newPosition;
 
-        // 7. 화면 끝으로 이동 시 반대편에서 나타나게 한다.
+        // 6. 화면 좌우 래핑
         if (transform.position.x <= MinX)
         {
             transform.position = new Vector3(MaxX, transform.position.y, transform.position.z);
@@ -100,29 +90,27 @@ public class PlayerMove : MonoBehaviour
             transform.position = new Vector3(MinX, transform.position.y, transform.position.z);
         }
 
-        // 8. R 키를 누르면 플레이어가 자동으로 원점(0,-3,0)으로 점점 초기화한다.
-        // 조건: Translate를 사용하여 구현
-        if (Input.GetKey(KeyCode.R))
+        // 7. R 키: 원점 방향으로 점점 이동
+        if (rHeld)
         {
-            // 원점 방향 벡터 계산
-            // 원점 방향    =       원점 위치 - 현재 위치.정규화
-            Vector3 toOrigin = (originPosition - transform.position).normalized;
+            // 원점 방향 벡터
+            Vector3 toOrigin = (_originPosition - transform.position).normalized;
 
-            // 원점으로 이동
-            transform.Translate(toOrigin * (Speed * DashSpeedMultiplier) * Time.deltaTime);
+            // 원점 방향으로 이동
+            transform.Translate(toOrigin * (_speed * DashSpeedMultiplier) * deltaTime);
 
-            // 도착했을 때 위치 보정
-            if (Vector3.Distance(transform.position, originPosition) < 0.1f)
+            // 원점에 거의 도달했으면 정확히 고정
+            if (Vector3.Distance(transform.position, _originPosition) < 0.1f)
             {
-                // 만약 원점에 거의 도달했으면,
-                transform.position = originPosition;        // 정확히 원점으로 위치 보정
+                transform.position = _originPosition;
             }
         }
     }
 
-    public void Boost(float speedBoost)
+    // 아이템 등으로 속도 버프
+    public void Boost(float amount)
     {
-        // 아이템을 통해 스피드를 증가시키는 메서드
-        Speed += speedBoost;
+        _speed += amount;
+        Debug.Log("아이템을 먹었다!");
     }
 }

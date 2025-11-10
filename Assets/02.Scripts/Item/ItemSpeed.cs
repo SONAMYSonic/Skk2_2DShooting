@@ -17,8 +17,8 @@ public class ItemSpeed : MonoBehaviour
 
         else
         {
-            PlayerRecord playerRecord = collision.GetComponent<PlayerRecord>();
-            playerRecord.Boost(SpeedBoost);
+            PlayerMove playerMove = collision.GetComponent<PlayerMove>();
+            playerMove.Boost(SpeedBoost);
             Disappear();
         }
     }

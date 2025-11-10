@@ -113,7 +113,8 @@ MonoBehaviour:
   SpiralRadius: 0.5
   SpiralAngularSpeed: 5
   is_SubBullet: 0
-  SideDamageMultiplier: 0.5
+  MissDamageMultiplier: 0.5
+  Damage_Main: 20
   basePos: {x: 0, y: 0, z: 0}
 --- !u!61 &-6901423717949568782
 BoxCollider2D:

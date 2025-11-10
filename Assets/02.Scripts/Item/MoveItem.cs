@@ -6,13 +6,12 @@ public class MoveItem : MonoBehaviour
     // 드랍된 아이템은 2초 후 플레이어에게 날아온다
     // 베지어 곡선을 이용하여 휘어지게
 
-    [Header("아이템 이동 속도")]
-    public float MoveSpeed = 5f;
+    [Header("아이템 이동 시간")]
+    public float MoveDuration = 5f;
 
     [Header("시간 설정")]
     public float DelayTime = 2f;
 
-    private float _duration;          // 이동에 걸리는 총 시간
     private Transform _playerTransform;
     private Vector3 _startPosition;
     private float _elapsedTime = 0f;    // 경과 시간
@@ -41,7 +40,7 @@ public class MoveItem : MonoBehaviour
 
         if (_isMovingToPlayer)
         {
-            _elapsedTime += Time.deltaTime / _duration;
+            _elapsedTime += Time.deltaTime / MoveDuration;
 
             // 베지어 곡선 계산
             Vector3 controlPoint = (_startPosition + _playerTransform.position) / 2 + Vector3.right * BezierHeight;

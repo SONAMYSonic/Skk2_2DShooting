@@ -1,173 +1,94 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// 플레이어 이동
+/// <summary>
+/// 입력 기반 녹화 / 리플레이만 담당하는 스크립트
+/// (실제 이동은 PlayerMove에 위임)
+/// </summary>
+[RequireComponent(typeof(PlayerMove))]
 public class PlayerRecord : MonoBehaviour
 {
-    // 목표
-    // 1. 키보드 입력에 따라 방향을 구하고 그 방향으로 이동시키고 싶다
-    // 2. Q/E 키로 스피드를 조절하고 싶다.
-    // 3. 특정 영역을 벗어나지 못하게 하고 싶다.
-    // 4. 입력 기반 리플레이(녹화/재생)를 구현한다.
+    [Header("리플레이 상태")]
+    public bool isRecording = false;  // 리플레이 녹화 상태
+    public bool isReplaying = false;  // 리플레이 재생 상태
 
-    // 필요 속성
-    [Header("능력치")]
-    public float MaxSpeed = 20f; // 최대 이동 속도
-    public float MinSpeed = 1f;  // 최소 이동 속도
-    public float DashSpeedMultiplier = 1f; // 대시 시 속도 배율
-    private float _speed = 3f; // 이동 속도
+    private PlayerMove _move;         // 같은 오브젝트에 붙어 있는 PlayerMove 참조
 
-    // 이동 제한 범위
-    [Header("이동범위")]
-    public float MinX = -3f; // 좌측 경계
-    public float MaxX = 3f;  // 우측 경계
-    public float MinY = -4.5f; // 하단 경계
-    public float MaxY = 1f;  // 상단 경계
-
-    [Header("기타")]
-    public bool isDash = false; // 대시 상태 여부
-
-    [Header("시작 위치")]
-    private Vector3 _originPosition = new Vector3(0f, -3f, 0f); // 원점 위치
-
-    [Header("리플레이")]
-    // 리플레이 상태
-    public bool isRecording = false; // 리플레이 녹화 상태
-    public bool isReplaying = false; // 리플레이 재생 상태
-
-    [Header("총알")]
-    public GameObject bulletPrefab; // 총알 프리팹
-    public Transform bulletSpawnPoint; // 총알 발사 위치
-
-    // 입력 프레임 데이터
     [System.Serializable]
     private struct InputFrame
     {
-        public float deltaTime;     // 프레임 간 시간
-        public float h;             // 수평 입력
-        public float v;             // 수직 입력
-        public bool qHeld;          // Q 키 상태
-        public bool eHeld;          // E 키 상태
-        public bool shiftHeld;      // Shift 키 상태
-        public bool rHeld;          // R 키 상태
+        public float deltaTime;  // 프레임 간 시간
+        public float h;          // 수평 입력
+        public float v;          // 수직 입력
+        public bool qHeld;       // Q 키 상태
+        public bool eHeld;       // E 키 상태
+        public bool shiftDown;   // Shift 키 다운
+        public bool shiftUp;     // Shift 키 업
+        public bool rHeld;       // R 키 상태
     }
 
-    private readonly List<InputFrame> recordedFrames = new List<InputFrame>(4096);  
-    // 녹화된 입력 프레임 버퍼, 4096프레임인 이유는 약 68초 분량
-    
-    private int replayIndex = 0;    // 리플레이 중 현재 프레임 인덱스
+    private readonly List<InputFrame> recordedFrames = new List<InputFrame>(4096); // 약 68초 분량
+    private int replayIndex = 0;   // 리플레이 중 현재 프레임 인덱스
 
-    // 녹화 시작 시 초기 상태 스냅샷(리플레이 재현을 위해)
-    private Vector3 recordedStartPosition;      // 녹화 시작 위치
-    private float recordedStartSpeed;           // 녹화 시작 속도
-    private bool recordedStartDash;             // 녹화 시작 대시 상태
-    private bool prevReplayShiftHeld = false;   // 리플레이 중 Shift 키 이전 상태
+    // 녹화 시작 시 초기 상태 스냅샷
+    private Vector3 recordedStartPosition; // 녹화 시작 위치
+    private float recordedStartSpeed;      // 녹화 시작 속도
+    private bool recordedStartDash;        // 녹화 시작 대시 상태
+
+    private void Awake()
+    {
+        _move = GetComponent<PlayerMove>();
+    }
 
     private void Update()
     {
-        // 리플레이 토글
+        // 리플레이 토글 (Y 키)
         if (Input.GetKeyDown(KeyCode.Y))
         {
             if (isReplaying) StopReplay();
             else StartReplay();
         }
 
-        // 녹화 토글
+        // 녹화 토글 (T 키)
         if (Input.GetKeyDown(KeyCode.T))
         {
             if (isRecording) StopRecording();
             else StartRecording();
         }
 
-        // 리플레이 중이면, 실제 입력을 무시하고 기록된 프레임을 재생
+        // 리플레이 중이면 기록된 입력을 사용
         if (isReplaying)
         {
             ReplayFrame();
             return;
         }
 
-        // ==== 실제 입력 처리(녹화 아님) ====
+        // ===== 실제 입력 처리 =====
 
-        // 1. 스피드 조작 (Q: 스피드 업, E: 스피드 다운)
-        bool qHeld = Input.GetKey(KeyCode.Q);
-        bool eHeld = Input.GetKey(KeyCode.E);
-
-        if (qHeld) _speed += Time.deltaTime * 10f; // 부드럽게 속도 증가
-        if (eHeld) _speed -= Time.deltaTime * 10f; // 부드럽게 속도 감소
-
-        // Speed를 MinSpeed와 MaxSpeed 사이로 제한
-        _speed = Mathf.Clamp(_speed, MinSpeed, MaxSpeed);
-
-        // 1-1. Shift 키를 누르고 있으면 대시 상태 토글
-        if (Input.GetKeyDown(KeyCode.LeftShift) && isDash == false)
-        {
-            isDash = true;
-            DashSpeedMultiplier = 2f;
-        }
-        else if (Input.GetKeyUp(KeyCode.LeftShift) && isDash == true)
-        {
-            isDash = false;
-            DashSpeedMultiplier = 1f;
-        }
-
-        // 2. 키보드 입력을 감지한다.
+        // 1. 입력 값 읽기
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
-        bool shiftHeld = Input.GetKey(KeyCode.LeftShift);
+        bool qHeld = Input.GetKey(KeyCode.Q);
+        bool eHeld = Input.GetKey(KeyCode.E);
         bool rHeld = Input.GetKey(KeyCode.R);
+        bool shiftDown = Input.GetKeyDown(KeyCode.LeftShift);
+        bool shiftUp = Input.GetKeyUp(KeyCode.LeftShift);
 
-        // 3. 입력으로부터 방향을 구하고 정규화한다.
-        Vector2 direction = new Vector2(h, v).normalized;
+        // 2. 이동 로직은 PlayerMove에 위임
+        _move.ApplyInput(Time.deltaTime, h, v, qHeld, eHeld, shiftDown, shiftUp, rHeld);
 
-        // 4. 새로운 위치를 계산한다.
-        Vector3 newPosition = transform.position + (Vector3)direction * (_speed * DashSpeedMultiplier) * Time.deltaTime;
-
-        // 5. 새로운 위치를 제한된 영역 내로 보정한다.
-        newPosition.x = Mathf.Clamp(newPosition.x, MinX, MaxX);
-        newPosition.y = Mathf.Clamp(newPosition.y, MinY, MaxY);
-
-        // 6. 보정된 위치로 이동시킨다.
-        transform.position = newPosition;
-
-        // 7. 화면 끝으로 이동 시 반대편에서 나타나게 한다.
-        if (transform.position.x <= MinX)
+        // 3. 녹화 중이면 현재 프레임 입력 기록
+        if (isRecording)
         {
-            transform.position = new Vector3(MaxX, transform.position.y, transform.position.z);
-        }
-        else if (transform.position.x >= MaxX)
-        {
-            transform.position = new Vector3(MinX, transform.position.y, transform.position.z);
-        }
-
-        // 8. R 키를 누르면 플레이어가 자동으로 원점(0,-3,0)으로 점점 초기화한다.
-        if (rHeld)
-        {
-            // 원점 방향 벡터 계산
-            // 원점 방향    =       원점 위치 - 현재 위치.정규화
-            Vector3 toOrigin = (_originPosition - transform.position).normalized;
-
-            // 원점 방향으로 이동
-            transform.Translate(toOrigin * (_speed * DashSpeedMultiplier) * Time.deltaTime);
-
-            // 원점에 거의 도달했으면 정확히 고정
-            if (Vector3.Distance(transform.position, _originPosition) < 0.1f)
-            {
-                transform.position = _originPosition;
-            }
-        }
-
-        // 9. 리플레이 녹화: 현재 프레임의 입력 상태와 시간 기록
-        if (isRecording)    // 녹화 중이면,
-        {
-            // 현재 프레임 입력 상태를 리스트에 추가하면서 기록
             recordedFrames.Add(new InputFrame
             {
-                deltaTime = Time.deltaTime, // 프레임 간 시간
+                deltaTime = Time.deltaTime,
                 h = h,
                 v = v,
                 qHeld = qHeld,
                 eHeld = eHeld,
-                shiftHeld = shiftHeld,
+                shiftDown = shiftDown,
+                shiftUp = shiftUp,
                 rHeld = rHeld
             });
         }
@@ -184,53 +105,17 @@ public class PlayerRecord : MonoBehaviour
 
         var frame = recordedFrames[replayIndex];
 
-        // 스피드 조작(Q/E)
-        if (frame.qHeld) _speed += frame.deltaTime * 3f;
-        if (frame.eHeld) _speed -= frame.deltaTime * 3f;
-        _speed = Mathf.Clamp(_speed, MinSpeed, MaxSpeed);
-
-        // Shift 대시 토글(에지 검출)
-        if (frame.shiftHeld && !prevReplayShiftHeld)
-        {
-            isDash = true;
-            DashSpeedMultiplier = 2f;
-        }
-        else if (!frame.shiftHeld && prevReplayShiftHeld)
-        {
-            isDash = false;
-            DashSpeedMultiplier = 1f;
-        }
-        prevReplayShiftHeld = frame.shiftHeld;
-
-        // 이동
-        Vector2 direction = new Vector2(frame.h, frame.v).normalized;
-        Vector3 newPosition = transform.position + (Vector3)direction * (_speed * DashSpeedMultiplier) * frame.deltaTime;
-
-        newPosition.x = Mathf.Clamp(newPosition.x, MinX, MaxX);
-        newPosition.y = Mathf.Clamp(newPosition.y, MinY, MaxY);
-        transform.position = newPosition;
-
-        // 화면 좌우 래핑
-        if (transform.position.x <= MinX)
-        {
-            transform.position = new Vector3(MaxX, transform.position.y, transform.position.z);
-        }
-        else if (transform.position.x >= MaxX)
-        {
-            transform.position = new Vector3(MinX, transform.position.y, transform.position.z);
-        }
-
-        // 원점 복귀(R)
-        if (frame.rHeld)
-        {
-            Vector3 toOrigin = (_originPosition - transform.position).normalized;
-            transform.Translate(toOrigin * (_speed * DashSpeedMultiplier) * frame.deltaTime);
-
-            if (Vector3.Distance(transform.position, _originPosition) < 0.1f)
-            {
-                transform.position = _originPosition;
-            }
-        }
+        // PlayerMove에 "녹화 당시 입력"을 그대로 넣어줌
+        _move.ApplyInput(
+            frame.deltaTime,
+            frame.h,
+            frame.v,
+            frame.qHeld,
+            frame.eHeld,
+            frame.shiftDown,
+            frame.shiftUp,
+            frame.rHeld
+        );
 
         replayIndex++;
     }
@@ -243,12 +128,12 @@ public class PlayerRecord : MonoBehaviour
         recordedFrames.Clear();
         replayIndex = 0;
 
+        // 현재 상태 스냅샷 저장
         recordedStartPosition = transform.position;
-        recordedStartSpeed = _speed;
-        recordedStartDash = isDash;
-        prevReplayShiftHeld = recordedStartDash;
+        recordedStartSpeed = _move.Speed;
+        recordedStartDash = _move.isDash;
 
-        Debug.Log($"리플레이 녹화 시작 (프레임 버퍼 초기화)");
+        Debug.Log("리플레이 녹화 시작 (프레임 버퍼 초기화)");
     }
 
     private void StopRecording()
@@ -269,12 +154,11 @@ public class PlayerRecord : MonoBehaviour
         isRecording = false;
         replayIndex = 0;
 
-        // 녹화 시작 시점 상태로 복원 후 재생
+        // 녹화 시작 시점 상태로 복원 후 재생 시작
         transform.position = recordedStartPosition;
-        _speed = recordedStartSpeed;
-        isDash = recordedStartDash;
-        DashSpeedMultiplier = isDash ? 2f : 1f;
-        prevReplayShiftHeld = recordedStartDash;
+        _move.Speed = recordedStartSpeed;
+        _move.isDash = recordedStartDash;
+        _move.DashSpeedMultiplier = recordedStartDash ? 2f : 1f;
 
         Debug.Log("리플레이 재생 시작");
     }
@@ -284,12 +168,4 @@ public class PlayerRecord : MonoBehaviour
         isReplaying = false;
         Debug.Log("리플레이 재생 종료");
     }
-
-    public void Boost(float amount)
-    {
-        _speed += amount;
-        Debug.Log("아이템을 먹었다!");
-    }
-
-
 }

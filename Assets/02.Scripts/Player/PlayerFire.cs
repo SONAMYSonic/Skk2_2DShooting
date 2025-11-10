@@ -32,19 +32,10 @@ public class PlayerFire : MonoBehaviour
     private float _fireCooldownTimer = 0f; // 쿨타임 타이머
 
     [Header("자동 발사 모드")]
-    public bool isAutoFire = true; // 자동 발사 모드 여부
+    public bool IsAutoFire = true; // 자동 발사 모드 여부
 
     private void Update()
     {
-        // 발사 모드 키 입력 감지 (1번: 자동, 2번 수동)
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            isAutoFire = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            isAutoFire = false;
-        }
 
         // 쿨타임 타이머 갱신
         if (_fireCooldownTimer > 0f)
@@ -53,7 +44,7 @@ public class PlayerFire : MonoBehaviour
         }
 
         // 스페이스바 입력 혹은 오토일 시 발사 (+ 쿨타임 체크)
-        if ((Input.GetKey(KeyCode.Space) || isAutoFire) && _fireCooldownTimer <= 0f)
+        if ((Input.GetKey(KeyCode.Space) || IsAutoFire) && _fireCooldownTimer <= 0f)
         {
             FireBullet();
             SubFireBullet();
@@ -80,5 +71,10 @@ public class PlayerFire : MonoBehaviour
         // 발사 쿨타임 감소 연산
         _fireCooldown *= amount;
         Debug.Log("공격 속도 상승!");
+    }
+
+    public void ToggleAutoFire(bool autofire)
+    {
+        IsAutoFire = autofire;
     }
 }
