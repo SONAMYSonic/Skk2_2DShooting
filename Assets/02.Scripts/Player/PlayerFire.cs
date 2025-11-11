@@ -34,6 +34,9 @@ public class PlayerFire : MonoBehaviour
     [Header("자동 발사 모드")]
     public bool IsAutoFire = true; // 자동 발사 모드 여부
 
+    [Header("필살기")]
+    public GameObject SpecialAttackObject; // 필살기 오브젝트
+
     private void Update()
     {
 
@@ -49,6 +52,12 @@ public class PlayerFire : MonoBehaviour
             FireBullet();
             SubFireBullet();
             _fireCooldownTimer = _fireCooldown; // 쿨타임 초기화
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            // 필살기 발동
+            SpecialAttackObject.SetActive(true);
         }
     }
 
