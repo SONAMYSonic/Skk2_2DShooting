@@ -4,7 +4,7 @@ public class Enemy : MonoBehaviour
 {
     [Header("스탯")]
     public float Speed;
-    public float Damage = 1;
+    public float Damage = 1f;
     private float _health = 100f;
     
     [Header("이펙트")]
@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour
             return;
 
         collision.GetComponent<PlayerStats>().Hit(Damage);
-        Destroy(gameObject);
+        EnemyDead();
     }
 
     public void Hit(float damage)
@@ -32,13 +32,18 @@ public class Enemy : MonoBehaviour
         _enemyAnimator.SetTrigger("Hit"); // 히트 애니메이션 재생
         if (_health <= 0)
         {
-            MakeExplosionEffect();
-            Destroy(gameObject);
+            EnemyDead();
         }
     }
 
     private void MakeExplosionEffect()
     {
         Instantiate(ExplosionPrefab, transform.position, Quaternion.identity);
+    }
+
+    public void EnemyDead()
+    {
+        MakeExplosionEffect();
+        Destroy(gameObject);
     }
 }
