@@ -29,6 +29,14 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     private Vector3 _originPosition = new Vector3(0f, -3f, 0f); // 원점 위치
 
+    private Animator _animator;
+
+    private void Start()
+    {
+        // 애니메이터 컴포넌트 가져오기
+        _animator = GetComponent<Animator>();
+    }
+
     // Speed를 리플레이에서 건드릴 수 있도록 프로퍼티로 노출
     public float Speed
     {
@@ -68,6 +76,8 @@ public class PlayerMove : MonoBehaviour
 
         // 2. 입력으로부터 방향을 구하고 정규화
         Vector2 direction = new Vector2(h, v).normalized;
+
+        _animator.SetInteger("x", (int)direction.x);
 
         // 3. 새로운 위치 계산
         Vector3 newPosition = transform.position +
