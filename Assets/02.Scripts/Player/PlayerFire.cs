@@ -19,13 +19,13 @@ public class PlayerFire : MonoBehaviour
 
     // 필요 속성
     [Header("총알 프리팹")]
-    public GameObject BulletPrefab; // 총알 프리팹
-    public GameObject SubBulletPrefab; // 보조 총알 프리팹
+    public GameObject BulletPrefab;          // 총알 프리팹
+    public GameObject SubBulletPrefab;      // 보조 총알 프리팹
 
     [Header("총구")]
-    public Transform FirePosition; // 총알 발사 위치
-    public Transform SubFirePositionLeft; // 보조 총알 발사 위치
-    public Transform SubFirePositionRight; // 보조 총알 발사 위치
+    public Transform FirePosition;          // 총알 발사 위치
+    public Transform SubFirePositionLeft;   // 보조 총알 발사 위치
+    public Transform SubFirePositionRight;  // 보조 총알 발사 위치
 
     [Header("발사 쿨타임")]
     private float _fireCooldown = 0.6f; // 발사 쿨타임
@@ -40,32 +40,33 @@ public class PlayerFire : MonoBehaviour
     private void Update()
     {
 
-        // 쿨타임 타이머 갱신
+        // 쿨타임 타이머 갱신.
         if (_fireCooldownTimer > 0f)
         {
             _fireCooldownTimer -= Time.deltaTime;   // 타이머 감소
         }
 
-        // 스페이스바 입력 혹은 오토일 시 발사 (+ 쿨타임 체크)
+        // 스페이스바 입력 혹은 오토일 시 발사 (+ 쿨타임 체크).
         if ((Input.GetKey(KeyCode.Space) || IsAutoFire) && _fireCooldownTimer <= 0f)
         {
             FireBullet();
             SubFireBullet();
-            _fireCooldownTimer = _fireCooldown; // 쿨타임 초기화
+            // 쿨타임 초기화.
+            _fireCooldownTimer = _fireCooldown;
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            // 필살기 발동
+            // 필살기 발동.
             SpecialAttackObject.SetActive(true);
         }
     }
 
     private void FireBullet()
     {
-        // 총알 발사 위치에서 x -0.25만큼 떨어진 곳에서 첫번째 총알 생성
+        // 총알 발사 위치에서 x -0.25만큼 떨어진 곳에서 첫번째 총알 생성.
         Instantiate(BulletPrefab, FirePosition.position - new Vector3(0.25f, 0f, 0f), FirePosition.rotation);
-        // 총알 발사 위치에서 x +0.25만큼 떨어진 곳에서 두번째 총알 생성
+        // 총알 발사 위치에서 x +0.25만큼 떨어진 곳에서 두번째 총알 생성.
         Instantiate(BulletPrefab, FirePosition.position + new Vector3(0.25f, 0f, 0f), FirePosition.rotation);
     }
 
@@ -77,7 +78,7 @@ public class PlayerFire : MonoBehaviour
 
     public void AttackSpeedUP(float amount)
     {
-        // 발사 쿨타임 감소 연산
+        // 발사 쿨타임 감소 연산.
         _fireCooldown *= amount;
         Debug.Log("공격 속도 상승!");
     }
