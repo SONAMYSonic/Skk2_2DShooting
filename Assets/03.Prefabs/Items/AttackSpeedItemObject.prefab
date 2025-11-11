@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2972683274808894108}
   - component: {fileID: 6995525373701573348}
   - component: {fileID: -4411600994583756673}
+  - component: {fileID: 8740723476008588881}
   m_Layer: 0
   m_Name: AttackSpeedItemObject
   m_TagString: Untagged
@@ -177,3 +178,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8740723476008588881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2275193764794265023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2703ad8c45eedd84891245bd5005579b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EffectPrefab: {fileID: 8443315704496310910, guid: 6ef35fa36e3a65043b2d800600204bdd, type: 3}

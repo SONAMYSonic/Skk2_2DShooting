@@ -7,7 +7,6 @@ public class Study_Player : MonoBehaviour
     private Study_PlayerManualMove _study_PlayerManualMove;
     private Study_PlayerAutoMove _study_PlayerAutoMove;
 
-    private bool _autoMode = false;
     private float _health = 3;
 
     public float Speed = 3f;
