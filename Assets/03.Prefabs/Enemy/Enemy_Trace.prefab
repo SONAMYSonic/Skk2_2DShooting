@@ -68,7 +68,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.37695026, y: 0}
+  m_Offset: {x: 0.5498862, y: 0.0038431883}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -78,7 +78,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.24609947, y: 1}
+  m_Size: {x: 0.24353743, y: 1.0486786}
   m_EdgeRadius: 0
 --- !u!61 &4566435176689905668
 BoxCollider2D:
@@ -114,7 +114,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.38142237, y: 0}
+  m_Offset: {x: -0.5441103, y: 0.0012811422}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -124,7 +124,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.24755388, y: 1}
+  m_Size: {x: 0.2347436, y: 1.0486786}
   m_EdgeRadius: 0
 --- !u!50 &5624526942656506874
 Rigidbody2D:
@@ -235,8 +235,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -712631045867808456, guid: b670ab75dde984907b8570040daa08c5, type: 3}
-  m_Color: {r: 0.495283, g: 0.1495194, b: 0.1495194, a: 1}
+  m_Sprite: {fileID: -8421458170528590454, guid: 138040323294fd440a3a823e5d70ad01, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -334,17 +334,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.000000059604645, y: 0.0012809038}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.8828125}
+    oldSize: {x: 1.3333334, y: 1.125}
     newSize: {x: 1, y: 0.8828125}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.5, y: 0.95}
+  m_Size: {x: 0.8381859, y: 1.1319025}
   m_EdgeRadius: 0
 --- !u!114 &-792796737742217148
 MonoBehaviour:
@@ -362,6 +362,7 @@ MonoBehaviour:
   - {fileID: 8716667346965400862, guid: 0f70442c19aa5594d81176e315eb406f, type: 3}
   - {fileID: 997262363980530098, guid: 7869ef11f47623341a4f65d57e81727e, type: 3}
   - {fileID: 2275193764794265023, guid: e0db4b4f2fcc40444b43b5f6c54352bb, type: 3}
+  ItemWeights: 
   DropChance: 0.5
   DropRateHealth: 0.7
   DropRateSpeed: 0.2
