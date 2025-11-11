@@ -164,10 +164,11 @@ GameObject:
   - component: {fileID: 640213503853756415}
   - component: {fileID: 2254293450363197616}
   - component: {fileID: 1399602817534100813}
-  - component: {fileID: 328562958407513276}
   - component: {fileID: 7367294707414067687}
   - component: {fileID: 5306436767249142652}
   - component: {fileID: -792796737742217148}
+  - component: {fileID: -6932334695612849183}
+  - component: {fileID: 2463763618708968173}
   m_Layer: 0
   m_Name: Enemy_Trace
   m_TagString: Enemy
@@ -260,19 +261,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 3
   Damage: 1
---- !u!114 &328562958407513276
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6511368849690467462}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fac81b4b8c491b143a217e4926590668, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Type: 0
 --- !u!50 &7367294707414067687
 Rigidbody2D:
   serializedVersion: 5
@@ -367,3 +355,38 @@ MonoBehaviour:
   DropRateHealth: 0.7
   DropRateSpeed: 0.2
   DropRateAttackSpeed: 0.1
+--- !u!114 &-6932334695612849183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6511368849690467462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9d6789698b645c479a2b9a2efdc9330, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 0}
+--- !u!95 &2463763618708968173
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6511368849690467462}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cc1b22b1a8139564ea5ccab825f278b5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
