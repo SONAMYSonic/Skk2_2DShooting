@@ -28,8 +28,10 @@ public class Enemy : MonoBehaviour
 
     public void Hit(float damage)
     {
-        _health -= damage;      // 플레이어 총알 대미지 만큼 체력 감소
-        _enemyAnimator.SetTrigger("Hit"); // 히트 애니메이션 재생
+        // 플레이어 총알 대미지 만큼 체력 감소.
+        _health -= damage;
+        // 히트 애니메이션 재생.
+        _enemyAnimator.SetTrigger("Hit");
         if (_health <= 0)
         {
             EnemyDead();
