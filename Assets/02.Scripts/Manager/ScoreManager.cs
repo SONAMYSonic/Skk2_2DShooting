@@ -17,12 +17,13 @@ public class ScoreManager : MonoBehaviour
     private int _currentSocre = 0;
     public int CurrentScore => _currentSocre;
 
-
-
     private void Start()
     {
+        Load();
         Refresh();
     }
+
+    // 하나의 메서드는 한 가지 일만 잘하면 된다
 
     public void AddScore(int score)
     {
@@ -30,7 +31,9 @@ public class ScoreManager : MonoBehaviour
             return;
 
         _currentSocre += score;
+
         Refresh();
+        Save();
     }
 
     private void Refresh()
@@ -38,17 +41,6 @@ public class ScoreManager : MonoBehaviour
         _currentScoreTextUI.text = $"현재 점수: {_currentSocre}";
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            Save();
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            Load();
-        }
-    }
 
     private void Save()
     {
@@ -58,21 +50,13 @@ public class ScoreManager : MonoBehaviour
         // 저장: Set
         // 로드: Get
 
-        PlayerPrefs.SetInt("score", _currentSocre);
-        //PlayerPrefs.SetString("name", "김재만");
+        PlayerPrefs.SetInt("ScoreKey", _currentSocre);
         Debug.Log("저장 완료");
     }
 
     private void Load()
     {
-        if (PlayerPrefs.HasKey("score"))      // 검사
-        {
-            _currentSocre = PlayerPrefs.GetInt("score");
-        }
-
+        _currentSocre = PlayerPrefs.GetInt("ScoreKey", 0);  // 저장값 없으면 0 반환
         //string name = PlayerPrefs.GetString("name", "티모");  // default 인자
-
-        Refresh();
-        Debug.Log($"로드 완료, 전판 점수: {_currentSocre}");
     }
 }
