@@ -3062,8 +3062,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UltimateDuration: 3
-  audioSource: {fileID: 2099245368}
-  audioManager: {fileID: 2099245370}
+  AudioManager: {fileID: 2099245370}
 --- !u!1 &1478035688
 GameObject:
   m_ObjectHideFlags: 0
@@ -4820,11 +4819,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5afcd01378cdb624fbb9c3d50fe2718c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 2099245368}
-  audioClips:
-  - {fileID: 8300000, guid: ba08b82066cdf0b4da8d091c889d76c7, type: 3}
-  - {fileID: 8300000, guid: 9e9ca33908b70b04c9065533375a0de1, type: 3}
-  - {fileID: 8300000, guid: 2291acad7366f014ca3b18639d598d80, type: 3}
+  AudioSource: {fileID: 0}
+  AudioClips: []
   audioType: 0
 --- !u!4 &2108530814 stripped
 Transform:

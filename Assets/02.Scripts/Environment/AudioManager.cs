@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    public AudioSource audioSource;
-    public AudioClip[] audioClips;
+    public AudioSource AudioSource;
+    public AudioClip[] AudioClips;
 
     public enum EAudioType
     {
@@ -15,11 +15,11 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound(EAudioType eAudioType)
     {
-        if (eAudioType < 0 || (int)eAudioType >= audioClips.Length)
+        if (eAudioType < 0 || (int)eAudioType >= AudioClips.Length)
         {
             Debug.LogWarning("Invalid audio clip index: " + eAudioType);
             return;
         }
-        audioSource.PlayOneShot(audioClips[(int)eAudioType]);
+        AudioSource.PlayOneShot(AudioClips[(int)eAudioType]);
     }
 }
