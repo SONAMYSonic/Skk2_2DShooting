@@ -51,7 +51,11 @@ public class Enemy : MonoBehaviour
         MakeExplosionEffect();
 
         ScoreManager scoreManager = FindAnyObjectByType<ScoreManager>();
+<<<<<<< Updated upstream
         scoreManager.AddScore(100);     // todo: 매직넘버 수정.
+=======
+        scoreManager.AddScore(EnemyScore);
+>>>>>>> Stashed changes
 
 
         Destroy(gameObject);
