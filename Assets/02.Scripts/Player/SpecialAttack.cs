@@ -8,14 +8,13 @@ public class SpecialAttack : MonoBehaviour
     public float UltimateDuration = 3f;  // 필살기 지속 시간
     private float _ultimateTimer = 0f;   // 필살기 타이머
 
-    public AudioSource audioSource;
-    public AudioManager audioManager;
+    public AudioManager AudioManager;
 
     private void OnEnable()
     {
         _ultimateTimer = UltimateDuration;
         // 필살기 사운드 재생
-        audioManager.PlaySound(AudioManager.EAudioType.SpecialAttack);
+        AudioManager.PlaySound(AudioManager.EAudioType.SpecialAttack);
     }
 
     private void Update()
