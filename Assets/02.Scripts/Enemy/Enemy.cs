@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Enemy : MonoBehaviour
 {
@@ -6,7 +7,9 @@ public class Enemy : MonoBehaviour
     public float Speed;
     public float Damage = 1f;
     private float _health = 100f;
-    
+
+    [Header("점수")]
+
     [Header("이펙트")]
     public GameObject ExplosionPrefab;
 
@@ -46,6 +49,11 @@ public class Enemy : MonoBehaviour
     public void EnemyDead()
     {
         MakeExplosionEffect();
+
+        ScoreManager scoreManager = FindAnyObjectByType<ScoreManager>();
+        scoreManager.AddScore(100);     // todo: 매직넘버 수정.
+
+
         Destroy(gameObject);
     }
 }
