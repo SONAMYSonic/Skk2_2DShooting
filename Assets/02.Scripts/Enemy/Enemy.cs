@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     private float _health = 100f;
 
     [Header("점수")]
+    public int EnemyScore = 100;
 
     [Header("이펙트")]
     public GameObject ExplosionPrefab;
@@ -51,7 +52,7 @@ public class Enemy : MonoBehaviour
         MakeExplosionEffect();
 
         ScoreManager scoreManager = FindAnyObjectByType<ScoreManager>();
-        scoreManager.AddScore(100);     // todo: 매직넘버 수정.
+        scoreManager.AddScore(EnemyScore);     // todo: 매직넘버 수정.
 
 
         Destroy(gameObject);
