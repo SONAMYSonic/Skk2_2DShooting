@@ -13,14 +13,17 @@ public class ScoreManager : MonoBehaviour
     // Field를 Unity가 이해할 수 있도록 Serialize (직렬화) 처리
     [SerializeField]
     private Text _currentScoreTextUI;
-    // - 현재 점수를 기억할 변수
+    [SerializeField]
+    private Text _bestScoreTextUI;
+
+    // - 점수 저장 변수
     private int _currentSocre = 0;
-    public int CurrentScore => _currentSocre;
+    private int _bestScore = 0;
 
     private void Start()
     {
-        Load();
         Refresh();
+        BestScoreLoad();
     }
 
     // 하나의 메서드는 한 가지 일만 잘하면 된다
@@ -33,12 +36,26 @@ public class ScoreManager : MonoBehaviour
         _currentSocre += score;
 
         Refresh();
-        Save();
+
+        // 최고 점수 갱신
+        if (_currentSocre > _bestScore)
+        {
+            BestScoreSave();
+        }
     }
 
     private void Refresh()
     {
         _currentScoreTextUI.text = $"현재 점수: {_currentSocre:N0}";
+    }
+
+    private void BestScoreSave()
+    {
+        _bestScore = _currentSocre;
+        BestScoreRefresh();
+
+        // 최고 점수 갱신 때만 저장
+        Save();
     }
 
 
@@ -50,13 +67,20 @@ public class ScoreManager : MonoBehaviour
         // 저장: Set
         // 로드: Get
 
-        PlayerPrefs.SetInt("ScoreKey", _currentSocre);
+        PlayerPrefs.SetInt("BestScoreKey", _currentSocre);
         Debug.Log("저장 완료");
     }
 
-    private void Load()
+    private void BestScoreLoad()
     {
-        _currentSocre = PlayerPrefs.GetInt("ScoreKey", 0);  // 저장값 없으면 0 반환
+        _bestScore = PlayerPrefs.GetInt("BestScoreKey", 0);  // 저장값 없으면 0 반환
         //string name = PlayerPrefs.GetString("name", "티모");  // default 인자
+
+        BestScoreRefresh();
+    }
+
+    private void BestScoreRefresh()
+    {
+        _bestScoreTextUI.text = $"최고 점수: {_bestScore:N0}";
     }
 }
