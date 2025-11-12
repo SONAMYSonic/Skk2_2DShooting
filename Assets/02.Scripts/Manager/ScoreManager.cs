@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+// DOTween을 사용해보자
+using DG.Tweening;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -22,7 +24,6 @@ public class ScoreManager : MonoBehaviour
 
     private void Start()
     {
-        Refresh();
         BestScoreLoad();
     }
 
@@ -47,6 +48,10 @@ public class ScoreManager : MonoBehaviour
     private void Refresh()
     {
         _currentScoreTextUI.text = $"현재 점수: {_currentSocre:N0}";
+        // DoTween을 사용하여 애니메이션 효과 주기
+        _currentScoreTextUI.transform.DOKill(true); // 이전 애니메이션이 있으면 제거
+        _currentScoreTextUI.transform.DOPunchScale(Vector3.one *2f, 0.2f, 3, 1);
+
     }
 
     private void BestScoreSave()
@@ -83,4 +88,6 @@ public class ScoreManager : MonoBehaviour
     {
         _bestScoreTextUI.text = $"최고 점수: {_bestScore:N0}";
     }
+
+    
 }
