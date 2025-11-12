@@ -37,6 +37,9 @@ public class PlayerFire : MonoBehaviour
     [Header("필살기")]
     public GameObject SpecialAttackObject; // 필살기 오브젝트
 
+    [Header("사운드")]
+    public AudioSource FireSound; // 발사 사운드
+
     private void Update()
     {
 
@@ -49,6 +52,8 @@ public class PlayerFire : MonoBehaviour
         // 스페이스바 입력 혹은 오토일 시 발사 (+ 쿨타임 체크).
         if ((Input.GetKey(KeyCode.Space) || IsAutoFire) && _fireCooldownTimer <= 0f)
         {
+            FireSound.Play();
+
             FireBullet();
             SubFireBullet();
             // 쿨타임 초기화.

@@ -21,7 +21,7 @@ public class ScoreManager : MonoBehaviour
     private Text _bestScoreTextUI;
 
     // - 점수 저장 변수
-    private int _currentSocre = 0;
+    private int _currentScore = 0;
     private int _bestScore = 0;
 
     public class UserData
@@ -54,12 +54,12 @@ public class ScoreManager : MonoBehaviour
         if (score <= 0)
             return;
 
-        _currentSocre += score;
+        _currentScore += score;
 
         Refresh();
 
         // 최고 점수 갱신하고 저장
-        if (_currentSocre > _bestScore)
+        if (_currentScore > _bestScore)
         {
             JSONBestScoreSave();
         }
@@ -67,7 +67,7 @@ public class ScoreManager : MonoBehaviour
 
     private void Refresh()
     {
-        _currentScoreTextUI.text = $"현재 점수: {_currentSocre:N0}";
+        _currentScoreTextUI.text = $"현재 점수: {_currentScore:N0}";
         // DoTween을 사용하여 애니메이션 효과 주기
         _currentScoreTextUI.transform.DOKill(true); // 이전 애니메이션이 있으면 제거
         _currentScoreTextUI.transform.DOPunchScale(Vector3.one *2f, 0.2f, 3, 1);
@@ -75,7 +75,7 @@ public class ScoreManager : MonoBehaviour
 
     private void JSONBestScoreSave()
     {
-        _bestScore = _currentSocre;
+        _bestScore = _currentScore;
         userData.BestScore = _bestScore;
 
         // 객체를 JSON 문자열로 변환
