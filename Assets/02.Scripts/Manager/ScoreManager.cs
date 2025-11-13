@@ -7,6 +7,23 @@ using System.IO;
 
 public class ScoreManager : MonoBehaviour
 {
+    // 단 하나여야 한다.
+    // 전역적인 접근점을 제공해야 한다.
+    // 게임 개발에서는 Manager(관리자) 클래스를 보통 싱글톤 패턴으로 사용하는것이 관행이다.
+    private static ScoreManager _instance = null;
+    public static ScoreManager Instance => _instance;
+    private void Awake()
+    {
+        // 인스턴스가 이미 생성(참조)된게 있다면
+        // 후발주자들은 삭제해버린다
+        if (_instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        _instance = this;
+    }
+
     // 목표: 적을 죽일 때마다 점수를 올리고, 현재 점수를 UI에 표시하고 싶다.
 
     // 응집도를 높혀라

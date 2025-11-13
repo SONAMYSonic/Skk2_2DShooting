@@ -15,13 +15,10 @@ public class Enemy : MonoBehaviour
     public GameObject ExplosionPrefab;
 
     private Animator _enemyAnimator;
-    private AudioManager _audioManager;
 
     private void Start()
     {
         _enemyAnimator = GetComponent<Animator>();
-        // tag가 AudioManager인 오브젝트를 찾아서 AudioManager 컴포넌트를 가져온다.
-        _audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -53,11 +50,12 @@ public class Enemy : MonoBehaviour
     public void EnemyDead()
     {
         MakeExplosionEffect();
-        _audioManager.PlaySound(AudioManager.EAudioType.EnemyDeath);
+        AudioManager.AudioManagerInstance.PlaySound(AudioManager.EAudioType.EnemyDeath);
 
-        ScoreManager scoreManager = FindAnyObjectByType<ScoreManager>();
-        scoreManager.AddScore(EnemyScore);     // todo: 매직넘버 수정.
-
+        // 점수 관리자는 인스턴스가 단 하나다. 혹은 단 하나임을 보장해야 한다.
+        // 아무 곳에서 빠르게 접근하고 싶다.
+        // 싱글톤 패턴
+        ScoreManager.Instance.AddScore(EnemyScore);     // todo: 매직넘버 수정.
 
         Destroy(gameObject);
     }

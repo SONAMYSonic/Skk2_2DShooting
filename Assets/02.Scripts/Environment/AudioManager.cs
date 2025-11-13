@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    private static AudioManager _audioManagerInstance;
+    public static AudioManager AudioManagerInstance => _audioManagerInstance;
+
     public AudioSource AudioSource;
     public AudioClip[] AudioClips;
 
@@ -12,6 +15,16 @@ public class AudioManager : MonoBehaviour
         SpecialAttack
     }
     public EAudioType audioType;
+
+    private void Awake()
+    {
+        if (_audioManagerInstance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        _audioManagerInstance = this;
+    }
 
     public void PlaySound(EAudioType eAudioType)
     {
