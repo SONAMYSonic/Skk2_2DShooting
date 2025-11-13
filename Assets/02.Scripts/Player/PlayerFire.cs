@@ -17,15 +17,19 @@ public class PlayerFire : MonoBehaviour
         - 보조 총알은 속도와 모양이 다르다
     */
 
-    // 필요 속성
-    [Header("총알 프리팹")]
-    public GameObject BulletPrefab;          // 총알 프리팹
-    public GameObject SubBulletPrefab;      // 보조 총알 프리팹
+    // 플레이어가 총알 생성 (PlayerFire)
+    // 적이 총알 생성 (EnemyFire, Enemy, EnemyController)
+    // 펫도 총알 생성 (PetFire)
+    //  ㄴ 생성 로직이 바뀔때마다 모든 코드가 수정되어야 한다
+    //  ㄴ 총알 생성이라는 공통 기능을 담당하는 클래스를 만들면 편하지 않을까?
+    // 총알 생성기.만들어줘(타입, 대미지, 위치, 생성이펙트);
+
 
     [Header("총구")]
     public Transform FirePosition;          // 총알 발사 위치
     public Transform SubFirePositionLeft;   // 보조 총알 발사 위치
     public Transform SubFirePositionRight;  // 보조 총알 발사 위치
+    private float _fireOffsetX = 0.25f;      // 총알 발사 X 오프셋
 
     [Header("발사 쿨타임")]
     private float _fireCooldown = 0.6f; // 발사 쿨타임
@@ -69,16 +73,14 @@ public class PlayerFire : MonoBehaviour
 
     private void FireBullet()
     {
-        // 총알 발사 위치에서 x -0.25만큼 떨어진 곳에서 첫번째 총알 생성.
-        Instantiate(BulletPrefab, FirePosition.position - new Vector3(0.25f, 0f, 0f), FirePosition.rotation);
-        // 총알 발사 위치에서 x +0.25만큼 떨어진 곳에서 두번째 총알 생성.
-        Instantiate(BulletPrefab, FirePosition.position + new Vector3(0.25f, 0f, 0f), FirePosition.rotation);
+        BulletFactory.Instance.MakeBullet(FirePosition.position - new Vector3(_fireOffsetX, 0f, 0f));
+        BulletFactory.Instance.MakeBullet(FirePosition.position + new Vector3(_fireOffsetX, 0f, 0f));
     }
 
     private void SubFireBullet()
     {
-        Instantiate(SubBulletPrefab, SubFirePositionLeft.position, FirePosition.rotation);
-        Instantiate(SubBulletPrefab, SubFirePositionRight.position, FirePosition.rotation);
+        BulletFactory.Instance.MakeSubBullet(SubFirePositionLeft.position);
+        BulletFactory.Instance.MakeSubBullet(SubFirePositionRight.position);
     }
 
     public void AttackSpeedUP(float amount)

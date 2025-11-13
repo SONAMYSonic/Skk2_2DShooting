@@ -88,7 +88,7 @@ public class Bullet : MonoBehaviour
                 enemy.GetComponent<Enemy>().Hit(Damage_Sub * MissDamageMultiplier); // 적 체력 서브
         }
 
-        Destroy(gameObject); // 총알 파괴
+        gameObject.SetActive(false); // 총알 비활성화
     }
 
     private void _sMode()

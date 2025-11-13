@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5808403828933927124}
   m_Layer: 0
   m_Name: PetBullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -115,7 +115,8 @@ MonoBehaviour:
   is_SubBullet: 1
   MissDamageMultiplier: 0.5
   Damage_Main: 10
-  basePos: {x: 0, y: 0, z: 0}
+  Damage_Sub: 40
+  _basePos: {x: 0, y: 0, z: 0}
 --- !u!50 &-6072286210914610572
 Rigidbody2D:
   serializedVersion: 5

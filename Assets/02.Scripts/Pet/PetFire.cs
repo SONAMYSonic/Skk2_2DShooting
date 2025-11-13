@@ -9,6 +9,8 @@ public class PetFire : MonoBehaviour
     private float _petFireCooldown = 3f; // 발사 쿨타임
     private float _petFireCooldownTimer = 0f; // 쿨타임 타이머
 
+    private float _fireOffsetY = 0.25f;      // 총알 발사 Y 오프셋
+
     private void Update()
     {
         _petFireCooldownTimer += Time.deltaTime;
@@ -25,7 +27,6 @@ public class PetFire : MonoBehaviour
 
     private void PetFireBullet()
     {
-        // 총알 발사 위치에서 y +0.25만큼 떨어진 곳에서 총알 생성
-        Instantiate(PetBulletPrefab, transform.position + new Vector3(0f, 0.25f, 0f), Quaternion.identity);
+        BulletFactory.Instance.MakeBullet(transform.position + new Vector3(0f, _fireOffsetY, 0f));
     }
 }
