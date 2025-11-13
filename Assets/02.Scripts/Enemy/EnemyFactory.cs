@@ -84,33 +84,35 @@ public class EnemyFactory : MonoBehaviour
         }
     }
 
-    public GameObject SpawnEnemy(int enemyType, Vector3 EnemySpawnPosition)
+    // 개선된 SpawnEnemy: enum 파라미터, for 루프, transform 캐시
+    public GameObject SpawnEnemy(EEnemyType enemyType, Vector3 EnemySpawnPosition)
     {
-        // 적 타입에 따라 해당 풀에서 비활성화된 적 오브젝트를 찾아 반환
         GameObject[] selectedPool = enemyType switch
         {
-            (int)EEnemyType.Enemy_BrakeAcc => _brakeAcc,
-            (int)EEnemyType.Enemy_Straight => _straight,
-            (int)EEnemyType.Enemy_Trace => _trace,
-            (int)EEnemyType.Enemy_Zigzag => _zigzag,
+            EEnemyType.Enemy_BrakeAcc => _brakeAcc,
+            EEnemyType.Enemy_Straight => _straight,
+            EEnemyType.Enemy_Trace => _trace,
+            EEnemyType.Enemy_Zigzag => _zigzag,
             _ => null
         };
 
-        // 선택된 풀이 null인 경우 null 반환
         if (selectedPool == null)
             return null;
 
-        foreach (var enemy in selectedPool)
+        for (int i = 0; i < selectedPool.Length; i++)
         {
-            // 비활성화된 적 오브젝트를 찾아 반환
+            var enemy = selectedPool[i];
+            if (enemy == null) continue;
+
             if (!enemy.activeInHierarchy)
             {
-                enemy.transform.position = EnemySpawnPosition; // 스폰 위치 설정
-                enemy.SetActive(true); // 적 활성화
-
+                // transform 캐시
+                Transform t = enemy.transform;
+                t.position = EnemySpawnPosition;
+                enemy.SetActive(true);
                 return enemy;
             }
         }
-        return null; // 모든 적이 사용 중인 경우 null 반환
+        return null;
     }
 }

@@ -49,7 +49,7 @@ public class EnemySpawner : MonoBehaviour
         // 30% 확률(0.3f 보다 작을 때)로 추적 적 생성, 70% 확률로 직진 적 생성
         //GameObject enemyToSpawn = randomValue < 0.3f ? EnemyPrefabs[(int)EEnemyType.Following] : EnemyPrefabs[(int)EEnemyType.Straight];
         // 그냥 랜덤하게 적 생성
-        int enemyRandomSpawn = Random.Range(0, EnemyFactory.Instance.EnemyPrefabs.Length);
+        EnemyFactory.EEnemyType enemyRandomSpawn = (EnemyFactory.EEnemyType)Random.Range(0, EnemyFactory.Instance.EnemyPrefabs.Length);
         EnemyFactory.Instance.SpawnEnemy(enemyRandomSpawn, transform.position);
         _timer = 0f;    // 타이머 초기화
         // 다음 스폰 간격을 다시 랜덤하게 설정
