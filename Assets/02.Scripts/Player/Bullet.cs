@@ -24,28 +24,28 @@ public class Bullet : MonoBehaviour
 
     [Header("총알 데미지")]
     public float Damage_Main = 60f; // 메인 총알 데미지
-    private float Damage_Sub = 40f;  // 서브 총알 데미지
+    public float Damage_Sub = 40f;  // 서브 총알 데미지
 
     [SerializeField]
-    Vector3 basePos;                // 직선 기준 위치
-    float t;                        // 경과 시간
+    Vector3 _basePos;                // 직선 기준 위치
+    float _timer;                        // 경과 시간
 
     private void Start()
     {
         Speed = InitialSpeed; // 초기 속도로 설정
-        basePos = transform.position;   // 발사 시작 위치
+        _basePos = transform.position;   // 발사 시작 위치
     }
 
     void Update()
     {
         // 시간 누적
-        t += Time.deltaTime;
+        _timer += Time.deltaTime;
 
         // 속도 증가 초기 총알 속도(speed) 1에서 최대 속도(maxSpeed) 7까지 1.2초(zeroToMaxSpeed) 동안 증가
         Speed += (MaxSpeed - InitialSpeed) / ZeroToMaxSpeed * Time.deltaTime;
         Speed = Mathf.Min(Speed, MaxSpeed); // 속도가 최대 속도를 넘지 않도록 제한
 
-        basePos += transform.up * Speed * Time.deltaTime;       // 직선 이동
+        _basePos += transform.up * Speed * Time.deltaTime;       // 직선 이동
 
         if (is_S_mode)
         {
@@ -59,7 +59,7 @@ public class Bullet : MonoBehaviour
         }
         else
         {
-            transform.position = basePos; // 직선 이동
+            transform.position = _basePos; // 직선 이동
         }
     }
 
@@ -93,17 +93,17 @@ public class Bullet : MonoBehaviour
 
     private void _sMode()
     {
-        float offsetX = Mathf.Sin(t * Frequency) * Magnitude;           // S자 궤적 계산
-        transform.position = basePos + new Vector3(offsetX, 0f, 0f);    // 기준 위치 + X축 오프셋
+        float offsetX = Mathf.Sin(_timer * Frequency) * Magnitude;           // S자 궤적 계산
+        transform.position = _basePos + new Vector3(offsetX, 0f, 0f);    // 기준 위치 + X축 오프셋
     }
 
     private void _spiralMode()
     {
         // 원형(소용돌이) 오프셋
-        float angle = t * SpiralAngularSpeed;   // 시간에 따라 각도 증가
+        float angle = _timer * SpiralAngularSpeed;   // 시간에 따라 각도 증가
         float offsetX = Mathf.Cos(angle) * SpiralRadius;
         float offsetY = Mathf.Sin(angle) * SpiralRadius;
 
-        transform.position = basePos + new Vector3(offsetX, offsetY, 0f); // 기준 위치 + 원형 오프셋
+        transform.position = _basePos + new Vector3(offsetX, offsetY, 0f); // 기준 위치 + 원형 오프셋
     }
 }

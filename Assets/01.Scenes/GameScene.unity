@@ -1774,10 +1774,12 @@ GameObject:
   m_Component:
   - component: {fileID: 814394329}
   - component: {fileID: 814394328}
+  - component: {fileID: 814394331}
+  - component: {fileID: 814394330}
   m_Layer: 0
-  m_Name: PlayerPet
+  m_Name: PlayerPet 1
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -1845,12 +1847,39 @@ Transform:
   m_GameObject: {fileID: 814394327}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.51, y: -3.88, z: 0}
+  m_LocalPosition: {x: 0.002, y: -3.246, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &814394330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 814394327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d25fc0e1ebc2d34eb076dc1cebf36a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PetBulletPrefab: {fileID: 5525987523712991624, guid: 7e70bec093f0ae6499a559ef489d548c, type: 3}
+--- !u!114 &814394331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 814394327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6aecacceb3d7f14a9a8ce329d3e7eee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetTransform: {fileID: 533618386}
+  FollowDelay: 7
 --- !u!1 &835735772
 GameObject:
   m_ObjectHideFlags: 0
@@ -2790,6 +2819,122 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1292349218}
   m_CullTransparentMesh: 1
+--- !u!1 &1339397515
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1339397519}
+  - component: {fileID: 1339397518}
+  - component: {fileID: 1339397517}
+  - component: {fileID: 1339397516}
+  m_Layer: 0
+  m_Name: PlayerPet 2
+  m_TagString: Untagged
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1339397516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339397515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d25fc0e1ebc2d34eb076dc1cebf36a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PetBulletPrefab: {fileID: 5525987523712991624, guid: 7e70bec093f0ae6499a559ef489d548c, type: 3}
+--- !u!114 &1339397517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339397515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6aecacceb3d7f14a9a8ce329d3e7eee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetTransform: {fileID: 814394329}
+  FollowDelay: 7
+--- !u!212 &1339397518
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339397515}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 4378920111037482446, guid: 162e1a9db3b7af14baf1b62858da15eb, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!4 &1339397519
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1339397515}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.002, y: -3.466, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1392767836 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2649789618726610232, guid: 60ccf0f0da81fe347b2dfd5185d14f4b, type: 3}
@@ -4819,8 +4964,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5afcd01378cdb624fbb9c3d50fe2718c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AudioSource: {fileID: 0}
-  AudioClips: []
+  AudioSource: {fileID: 2099245368}
+  AudioClips:
+  - {fileID: 8300000, guid: ba08b82066cdf0b4da8d091c889d76c7, type: 3}
+  - {fileID: 8300000, guid: 9e9ca33908b70b04c9065533375a0de1, type: 3}
+  - {fileID: 8300000, guid: 2291acad7366f014ca3b18639d598d80, type: 3}
   audioType: 0
 --- !u!4 &2108530814 stripped
 Transform:
@@ -5465,6 +5613,8 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 533618386}
+  - {fileID: 814394329}
+  - {fileID: 1339397519}
   - {fileID: 1251384968}
   - {fileID: 226425961}
   - {fileID: 1892799597}
@@ -5476,4 +5626,3 @@ SceneRoots:
   - {fileID: 1690759570}
   - {fileID: 1052244291}
   - {fileID: 2099245369}
-  - {fileID: 814394329}
