@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
+
 public class PlayerFire : MonoBehaviour
 {
     // 목표: 스페이스바를 누르면 총알 발사

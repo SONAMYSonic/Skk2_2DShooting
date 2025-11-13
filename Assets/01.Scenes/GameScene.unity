@@ -119,6 +119,56 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &46035344
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 46035346}
+  - component: {fileID: 46035345}
+  m_Layer: 0
+  m_Name: EnemyFactory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &46035345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46035344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea04cb457515a043ad99d66cf1a5685, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyPrefabs:
+  - {fileID: 7625465183215978318, guid: d61a7fdc787379741b46532d3dd67e86, type: 3}
+  - {fileID: 3078537130502759798, guid: c258f2f53baab324481991870d7d2fe1, type: 3}
+  - {fileID: 6511368849690467462, guid: 3badd8ed49b68a9459f5538f5373e864, type: 3}
+  - {fileID: 1680321306092405002, guid: ebbbe74d1241cdb4e9cf86800de981d4, type: 3}
+  PoolSize: 20
+--- !u!4 &46035346
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46035344}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &111474906
 GameObject:
   m_ObjectHideFlags: 0
@@ -1613,6 +1663,7 @@ MonoBehaviour:
   BulletPrefab: {fileID: 8826443584539179871, guid: f5f4acf54ec7ebb45b6164aedc6208e5, type: 3}
   SubBulletPrefab: {fileID: 5525987523712991624, guid: aa6c79e32b4905c4ab04faa005b5e9a0, type: 3}
   PetBulletPrefab: {fileID: 5525987523712991624, guid: 7e70bec093f0ae6499a559ef489d548c, type: 3}
+  PoolSize: 30
 --- !u!4 &572082724
 Transform:
   m_ObjectHideFlags: 0
@@ -2583,6 +2634,56 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1228452102
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1228452104}
+  - component: {fileID: 1228452103}
+  m_Layer: 0
+  m_Name: Pool Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1228452103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1228452102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 733f4e1ff483611408f4a8d4fc9202ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pools:
+  - _name: PlayerBullets
+    _component: {fileID: 7999386128622350116, guid: f5f4acf54ec7ebb45b6164aedc6208e5, type: 3}
+    _count: 30
+    _container: {fileID: 572082724}
+    _nonLazy: 1
+--- !u!4 &1228452104
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1228452102}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1251384967
 GameObject:
   m_ObjectHideFlags: 0
@@ -5671,3 +5772,5 @@ SceneRoots:
   - {fileID: 1052244291}
   - {fileID: 2099245369}
   - {fileID: 572082724}
+  - {fileID: 1228452104}
+  - {fileID: 46035346}

@@ -24,7 +24,12 @@ public class EnemyBrakeAcc : MonoBehaviour
     private float _brakeDurationMin = 0.2f; // 최소 멈추는 데 걸리는 시간
     private float _brakeDurationMax = 1f; // 최대 멈춤 시간
 
-    private void Awake()
+    private void OnEnable()
+    {
+        Initialize();
+    }
+
+    private void Initialize()
     {
         EnemyBrakeDuration = Random.Range(_brakeDurationMin, _brakeDurationMax);  // 멈추는 데 걸리는 시간을 랜덤하게 설정
         EnemyMaxSpeedDuration = Random.Range(_accelerationMin, _accelerationMax); // 최대 속도에 도달하는 시간을 랜덤하게 설정

@@ -10,7 +10,12 @@ public class EnemyZigzagMove : MonoBehaviour
     private Vector3 _basePos;                // 직선 기준 위치
     private float _time;                        // 경과 시간
 
-    private void Awake()
+    private void OnEnable()
+    {
+        Initialize();
+    }
+
+    private void Initialize()
     {
         _basePos = transform.position;   // 초기 위치 저장
     }
