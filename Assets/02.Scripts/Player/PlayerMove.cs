@@ -29,6 +29,9 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     private Vector3 _originPosition = new Vector3(0f, -3f, 0f); // 원점 위치
 
+    [Header("조이스틱")]
+    public Joystick Joystick; // 조이스틱 오브젝트
+
     private Animator _animator;
 
     private void Start()
