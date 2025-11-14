@@ -9,6 +9,8 @@ TagManager:
   - DestroyZone
   - AudioManager
   - Bullet
+  - Boss
+  - BossBullet
   layers:
   - Default
   - TransparentFX

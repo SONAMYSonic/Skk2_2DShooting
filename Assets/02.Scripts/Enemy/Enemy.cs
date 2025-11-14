@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     public float Speed;
     public float Damage = 1f;
     private float _health = 100f;
+    [SerializeField]
     private float _initialHealth = 100f;
 
     [Header("점수")]
@@ -62,7 +63,7 @@ public class Enemy : MonoBehaviour
         // 점수 관리자는 인스턴스가 단 하나다. 혹은 단 하나임을 보장해야 한다.
         // 아무 곳에서 빠르게 접근하고 싶다.
         // 싱글톤 패턴
-        ScoreManager.Instance.AddScore(EnemyScore);     // todo: 매직넘버 수정.
+        ScoreManager.Instance.AddScore(EnemyScore);
         // 아이템 드랍
         GetComponent<EnemyItemDrop>().ItemSpawn();
         gameObject.SetActive(false);

@@ -80,6 +80,12 @@ public class ScoreManager : MonoBehaviour
         {
             JSONBestScoreSave();
         }
+
+        // 보스 소환 체크 (단순 직접 호출)
+        if (BossFactory.Instance != null)
+        {
+            BossFactory.Instance.TrySpawnBoss(_currentScore);
+        }
     }
 
     private void Refresh()

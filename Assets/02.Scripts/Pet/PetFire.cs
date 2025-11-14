@@ -27,6 +27,6 @@ public class PetFire : MonoBehaviour
 
     private void PetFireBullet()
     {
-        BulletFactory.Instance.MakeBullet(transform.position + new Vector3(0f, _fireOffsetY, 0f));
+        BulletFactory.Instance.MakePetBullet(transform.position + new Vector3(0f, _fireOffsetY, 0f));
     }
 }

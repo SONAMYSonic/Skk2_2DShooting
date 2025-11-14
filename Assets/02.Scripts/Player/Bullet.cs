@@ -66,7 +66,7 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // 총알은 Enemy와만 충돌 이벤트를 처리한다.
-        if ((collision.CompareTag("Enemy") || collision.CompareTag("EnemySide")) == false)
+        if ((collision.CompareTag("Enemy") || collision.CompareTag("EnemySide") || collision.CompareTag("Boss")) == false)
             return;
 
         if (collision.CompareTag("Enemy") == true)
@@ -76,6 +76,14 @@ public class Bullet : MonoBehaviour
                 enemy.GetComponent<Enemy>().Hit(Damage_Main);
             else
                 enemy.GetComponent<Enemy>().Hit(Damage_Sub);
+        }
+        else if (collision.CompareTag("Boss"))
+        {
+            Boss boss = collision.gameObject.GetComponent<Boss>();
+            if (is_SubBullet == false)
+                boss.GetComponent<Boss>().Hit(Damage_Main);
+            else
+                boss.GetComponent<Boss>().Hit(Damage_Sub);
         }
 
         if (collision.CompareTag("EnemySide") == true)

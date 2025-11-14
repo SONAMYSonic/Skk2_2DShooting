@@ -14,6 +14,9 @@ public class PlayerRecord : MonoBehaviour
 
     private PlayerMove _move;         // 같은 오브젝트에 붙어 있는 PlayerMove 참조
 
+    [Header("조이스틱")]
+    public Joystick Joystick;         // 조이스틱 오브젝트
+
     [System.Serializable]
     private struct InputFrame
     {
@@ -66,8 +69,8 @@ public class PlayerRecord : MonoBehaviour
         // ===== 실제 입력 처리 =====
 
         // 1. 입력 값 읽기
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+        float h = Joystick.Horizontal; //Input.GetAxisRaw("Horizontal");
+        float v = Joystick.Vertical; //Input.GetAxisRaw("Vertical");
         bool qHeld = Input.GetKey(KeyCode.Q);
         bool eHeld = Input.GetKey(KeyCode.E);
         bool rHeld = Input.GetKey(KeyCode.R);
