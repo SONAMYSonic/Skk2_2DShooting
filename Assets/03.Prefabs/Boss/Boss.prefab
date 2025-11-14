@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 6760761364364408544}
   - component: {fileID: 7124125645751453952}
   - component: {fileID: 6320663267298458336}
+  - component: {fileID: 446490721828586713}
+  - component: {fileID: 7034082711588601073}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Boss
@@ -189,3 +191,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bossStopYPosition: 1.5
+--- !u!114 &446490721828586713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597783553879009839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa14f6be74a810c48a9425fa6fbe627a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bulletFactory: {fileID: 0}
+  _fireOrigin: {fileID: 0}
+  _straightBulletSpeed: 6
+  _shotgunBulletCount: 8
+  _shotgunBaseAngleDegree: 270
+  _shotgunSpreadAngleDegree: 45
+  _shotgunBulletSpeed: 7
+  _fanBulletCount: 10
+  _fanBaseAngleDegree: 270
+  _fanSpreadAngleDegree: 60
+  _fanBulletSpeed: 7
+  _circleBulletCount: 24
+  _circleBulletSpeed: 5
+  _starBranchCount: 5
+  _starInnerBulletSpeed: 4
+  _starOuterBulletSpeed: 8
+--- !u!114 &7034082711588601073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597783553879009839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01908f2b6cce7d34f84a0475287d4efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bulletPattern: {fileID: 0}
+  _attackInterval: 1.5
+  _autoAttack: 1

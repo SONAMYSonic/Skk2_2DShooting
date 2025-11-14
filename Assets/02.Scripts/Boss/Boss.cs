@@ -5,7 +5,7 @@ public class Boss : MonoBehaviour
     [Header("스탯")]
     public float Speed;
     public float ColliderDamage = 9999f;                   // 플레이어와 충돌 시 입히는 대미지
-    private float _bossCurrentHealth = 2000f;
+    private float _bossCurrentHealth = 3500f;
     [SerializeField]
     private float _initialHealth = 3500f;
 

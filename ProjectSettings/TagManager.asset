@@ -10,6 +10,7 @@ TagManager:
   - AudioManager
   - Bullet
   - Boss
+  - BossBullet
   layers:
   - Default
   - TransparentFX

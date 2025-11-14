@@ -12,11 +12,14 @@ public class BulletFactory : MonoBehaviour
     public GameObject BulletPrefab;          // 총알 프리팹
     public GameObject SubBulletPrefab;      // 보조 총알 프리팹
     public GameObject PetBulletPrefab;      // 펫 총알 프리팹
+    public GameObject BossBulletPrefab;
 
     [Header("풀링")]
     public int PoolSize = 30;
+    public int BossPoolSize = 50;
     private GameObject[] _bulletObjectPool;      // 게임 총알을 담아둘 풀: 탄창
     private GameObject[] _subBulletObjectPool;
+    private GameObject[] _bossBulletObjectPool;
 
     private void Awake()
     {
@@ -29,6 +32,7 @@ public class BulletFactory : MonoBehaviour
 
         _bulletObjectPool = InitializePool(BulletPrefab, PoolSize);
         _subBulletObjectPool = InitializePool(SubBulletPrefab, PoolSize);
+        _bossBulletObjectPool = InitializePool(BossBulletPrefab, BossPoolSize);
     }
 
     private GameObject[] InitializePool(GameObject prefab, int size)
@@ -96,5 +100,21 @@ public class BulletFactory : MonoBehaviour
     public GameObject MakePetBullet(Vector3 position)
     {
         return Instantiate(PetBulletPrefab, position, Quaternion.identity, transform);
+    }
+
+    public GameObject MakeBossBullet(Vector3 position)
+    {
+        for (int i = 0; i < BossPoolSize; i++)
+        {
+            GameObject bossBulletObject = _bossBulletObjectPool[i];
+            if (bossBulletObject.activeInHierarchy == false)
+            {
+                bossBulletObject.transform.position = position;
+                bossBulletObject.SetActive(true);
+                return bossBulletObject;
+            }
+        }
+        Debug.LogWarning("보스 탄창이 부족합니다!");
+        return null;
     }
 }
