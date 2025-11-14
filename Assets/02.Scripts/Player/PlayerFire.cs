@@ -55,14 +55,9 @@ public class PlayerFire : MonoBehaviour
         }
 
         // 스페이스바 입력 혹은 오토일 시 발사 (+ 쿨타임 체크).
-        if ((Input.GetKey(KeyCode.Space) || IsAutoFire) && _fireCooldownTimer <= 0f)
+        if ((Input.GetKey(KeyCode.Space) || IsAutoFire))
         {
-            FireSound.Play();
-
-            FireBullet();
-            SubFireBullet();
-            // 쿨타임 초기화.
-            _fireCooldownTimer = _fireCooldown;
+            Fire();
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
@@ -94,5 +89,18 @@ public class PlayerFire : MonoBehaviour
     public void ToggleAutoFire(bool autofire)
     {
         IsAutoFire = autofire;
+    }
+
+    public void Fire()
+    {
+        if(_fireCooldownTimer > 0f)
+            return;
+
+        FireSound.Play();
+
+        FireBullet();
+        SubFireBullet();
+        // 쿨타임 초기화.
+        _fireCooldownTimer = _fireCooldown;
     }
 }
