@@ -27,39 +27,28 @@ public class BulletFactory : MonoBehaviour
         }
         _instance = this;
 
-        PlayerPoolInit();
-        PlayerSubPoolInit();
+        _bulletObjectPool = InitializePool(BulletPrefab, PoolSize);
+        _subBulletObjectPool = InitializePool(SubBulletPrefab, PoolSize);
     }
 
-    private void PlayerPoolInit()
+    private GameObject[] InitializePool(GameObject prefab, int size)
     {
         // 1. 탄창을 총알을 담을 수 있는 크기 배열 만들어준다
-        _bulletObjectPool = new GameObject[PoolSize];
+        GameObject[] pool = new GameObject[size];
 
         // 2. 탄창 크기만큼 반복해서
-        for (int i = 0; i < PoolSize; i++)
+        for (int i = 0; i < size; i++)
         {
             // 3. 총알을 생성한다.
-            GameObject bulletObject = Instantiate(BulletPrefab, transform);
+            GameObject obj = Instantiate(prefab, transform);
 
-            // 4. 생성한 총알을 탄창에 담는다
-            _bulletObjectPool[i] = bulletObject;
+            // 4. 비활성화 한다
+            obj.SetActive(false);
 
-            // 5. 비활성화 한다
-            bulletObject.SetActive(false);
+            // 5. 생성한 총알을 탄창에 담는다
+            pool[i] = obj;
         }
-    }
-
-    private void PlayerSubPoolInit()
-    {
-        _subBulletObjectPool = new GameObject[PoolSize];
-
-        for (int i = 0; i < PoolSize; i++)
-        {
-            GameObject subBulletObject = Instantiate(SubBulletPrefab, transform);
-            _subBulletObjectPool[i] = subBulletObject;
-            subBulletObject.SetActive(false);
-        }
+        return pool;
     }
 
     public GameObject MakeBullet(Vector3 playerFirePosition)
@@ -103,6 +92,7 @@ public class BulletFactory : MonoBehaviour
         return null;
     }
 
+    // Todo: 펫 총알 풀링 적용하기
     public GameObject MakePetBullet(Vector3 position)
     {
         return Instantiate(PetBulletPrefab, position, Quaternion.identity, transform);

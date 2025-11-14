@@ -9,7 +9,7 @@ public class PlayerStats : MonoBehaviour
     {
         if (_playerLife > 1)    // 남은 생명이 1 이상일 때
         {
-            _playerLife--;
+            _playerLife -= damage;
         }
         else    // 죽음 ㅋㅋㅋㅋ
         {

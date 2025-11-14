@@ -33,55 +33,23 @@ public class EnemyFactory : MonoBehaviour
             return;
         }
         _instance = this;
+
+        _brakeAcc = InitializePool(EnemyPrefabs[(int)EEnemyType.Enemy_BrakeAcc], PoolSize);
+        _straight = InitializePool(EnemyPrefabs[(int)EEnemyType.Enemy_Straight], PoolSize);
+        _trace = InitializePool(EnemyPrefabs[(int)EEnemyType.Enemy_Trace], PoolSize);
+        _zigzag = InitializePool(EnemyPrefabs[(int)EEnemyType.Enemy_Zigzag], PoolSize);
     }
 
-    private void Start()
+    private GameObject[] InitializePool(GameObject prefab, int size)
     {
-        BrakeAccPoolInit();
-        StraightPoolInit();
-        TracePoolInit();
-        ZigzagPoolInit();
-    }
-    private void BrakeAccPoolInit()
-    {
-        _brakeAcc = new GameObject[PoolSize];
-        for (int i = 0; i < PoolSize; i++)
+        GameObject[] pool = new GameObject[size];
+        for (int i = 0; i < size; i++)
         {
-            GameObject enemyObject = Instantiate(EnemyPrefabs[0], transform);
-            _brakeAcc[i] = enemyObject;
+            GameObject enemyObject = Instantiate(prefab, transform);
             enemyObject.SetActive(false);
+            pool[i] = enemyObject;
         }
-
-    }
-    private void StraightPoolInit()
-    {
-        _straight = new GameObject[PoolSize];
-        for (int i = 0; i < PoolSize; i++)
-        {
-            GameObject enemyObject = Instantiate(EnemyPrefabs[1], transform);
-            _straight[i] = enemyObject;
-            enemyObject.SetActive(false);
-        }
-    }
-    private void TracePoolInit()
-    {
-        _trace = new GameObject[PoolSize];
-        for (int i = 0; i < PoolSize; i++)
-        {
-            GameObject enemyObject = Instantiate(EnemyPrefabs[2], transform);
-            _trace[i] = enemyObject;
-            enemyObject.SetActive(false);
-        }
-    }
-    private void ZigzagPoolInit()
-    {
-        _zigzag = new GameObject[PoolSize];
-        for (int i = 0; i < PoolSize; i++)
-        {
-            GameObject enemyObject = Instantiate(EnemyPrefabs[3], transform);
-            _zigzag[i] = enemyObject;
-            enemyObject.SetActive(false);
-        }
+        return pool;
     }
 
     // 개선된 SpawnEnemy: enum 파라미터, for 루프, transform 캐시
