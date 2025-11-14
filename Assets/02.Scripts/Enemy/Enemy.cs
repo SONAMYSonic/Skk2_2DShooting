@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
     public float Speed;
     public float Damage = 1f;
     private float _health = 100f;
+    private float _initialHealth = 100f;
 
     [Header("점수")]
     public int EnemyScore = 100;
@@ -19,6 +20,12 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         _enemyAnimator = GetComponent<Animator>();
+    }
+
+    private void OnEnable()
+    {
+        // 체력 초기화
+        _health = _initialHealth;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -56,7 +63,8 @@ public class Enemy : MonoBehaviour
         // 아무 곳에서 빠르게 접근하고 싶다.
         // 싱글톤 패턴
         ScoreManager.Instance.AddScore(EnemyScore);     // todo: 매직넘버 수정.
-
-        Destroy(gameObject);
+        // 아이템 드랍
+        GetComponent<EnemyItemDrop>().ItemSpawn();
+        gameObject.SetActive(false);
     }
 }

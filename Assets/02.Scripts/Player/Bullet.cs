@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public class Bullet : MonoBehaviour
 {
     [Header("총알 속도")]
@@ -30,10 +31,9 @@ public class Bullet : MonoBehaviour
     Vector3 _basePos;                // 직선 기준 위치
     float _timer;                        // 경과 시간
 
-    private void Start()
+    private void OnEnable()
     {
-        Speed = InitialSpeed; // 초기 속도로 설정
-        _basePos = transform.position;   // 발사 시작 위치
+        BulletInitialize();
     }
 
     void Update()
@@ -88,7 +88,7 @@ public class Bullet : MonoBehaviour
                 enemy.GetComponent<Enemy>().Hit(Damage_Sub * MissDamageMultiplier); // 적 체력 서브
         }
 
-        Destroy(gameObject); // 총알 파괴
+        gameObject.SetActive(false); // 총알 비활성화
     }
 
     private void _sMode()
@@ -105,5 +105,11 @@ public class Bullet : MonoBehaviour
         float offsetY = Mathf.Sin(angle) * SpiralRadius;
 
         transform.position = _basePos + new Vector3(offsetX, offsetY, 0f); // 기준 위치 + 원형 오프셋
+    }
+
+    private void BulletInitialize()
+    {
+        Speed = InitialSpeed; // 초기 속도로 설정
+        _basePos = transform.position;   // 발사 시작 위치
     }
 }

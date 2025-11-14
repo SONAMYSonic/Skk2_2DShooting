@@ -28,8 +28,11 @@ public class EnemyItemDrop : MonoBehaviour
         AttackSpeed
     }
 
-    // 적 오브젝트가 파괴될 때 호출되는 메서드
-    private void OnDestroy()
+    // 오브젝트 풀링으로 구현 시 OnDisable()에서 처리
+    // 하면 처음 풀링 시 아이템이 드롭되는 현상이 발생하므로
+    // 하나의 개별 메서드로 구현한 다음 적이 죽을 때 (Enemy.cs) 호출하자
+    // 근데 지금보니까 아래 코드는 내가 만든거고 저 아래 코드가 강사님이 제작해주신거네...
+    public void ItemSpawn()
     {
         // 아이템 드롭 확률 체크
         float randomValue = Random.Range(0f, 1f);

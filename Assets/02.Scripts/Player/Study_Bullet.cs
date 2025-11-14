@@ -60,6 +60,6 @@ public class Study_Bullet : MonoBehaviour
 
         // 객체간의 상호 작용을 할 때: 묻지말고 시켜라
         enemy.Hit(Damage);
-        Destroy(gameObject); // 총알 파괴
+        //Destroy(gameObject); // 총알 파괴
     }
 }

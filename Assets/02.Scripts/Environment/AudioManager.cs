@@ -16,6 +16,7 @@ public class AudioManager : MonoBehaviour
     }
     public EAudioType audioType;
 
+    // Singleton Pattern 적용
     private void Awake()
     {
         if (_audioManagerInstance != null)
