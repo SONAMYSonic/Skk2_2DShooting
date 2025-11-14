@@ -69,8 +69,8 @@ public class PlayerRecord : MonoBehaviour
         // ===== 실제 입력 처리 =====
 
         // 1. 입력 값 읽기
-        float h = Joystick.Horizontal; //Input.GetAxisRaw("Horizontal");
-        float v = Joystick.Vertical; //Input.GetAxisRaw("Vertical");
+        float h = Input.GetAxisRaw("Horizontal");//Joystick.Horizontal; //
+        float v = Input.GetAxisRaw("Vertical");//Joystick.Vertical; //
         bool qHeld = Input.GetKey(KeyCode.Q);
         bool eHeld = Input.GetKey(KeyCode.E);
         bool rHeld = Input.GetKey(KeyCode.R);

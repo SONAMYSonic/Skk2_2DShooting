@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class BulletFactory : MonoBehaviour
 {
@@ -17,9 +18,14 @@ public class BulletFactory : MonoBehaviour
     [Header("풀링")]
     public int PoolSize = 30;
     public int BossPoolSize = 50;
-    private GameObject[] _bulletObjectPool;      // 게임 총알을 담아둘 풀: 탄창
-    private GameObject[] _subBulletObjectPool;
     private GameObject[] _bossBulletObjectPool;
+
+    private List<GameObject> _playerBulletList = new List<GameObject>();
+    private List<GameObject> _subBulletList = new List<GameObject>();
+    private List<GameObject> _bossBulletList = new List<GameObject>();
+    private int _playerBulletPoolSize = 50;
+    private int _bossBulletPoolSize = 50;
+    private int _bonusPoolSize = 25;
 
     private void Awake()
     {
@@ -30,9 +36,11 @@ public class BulletFactory : MonoBehaviour
         }
         _instance = this;
 
-        _bulletObjectPool = InitializePool(BulletPrefab, PoolSize);
-        _subBulletObjectPool = InitializePool(SubBulletPrefab, PoolSize);
         _bossBulletObjectPool = InitializePool(BossBulletPrefab, BossPoolSize);
+
+        BulletAddList(_playerBulletPoolSize, _playerBulletList, BulletPrefab);
+        BulletAddList(_playerBulletPoolSize, _subBulletList, SubBulletPrefab);
+        BulletAddList(_bossBulletPoolSize, _bossBulletList, BossBulletPrefab);
     }
 
     private GameObject[] InitializePool(GameObject prefab, int size)
@@ -55,45 +63,43 @@ public class BulletFactory : MonoBehaviour
         return pool;
     }
 
-    public GameObject MakeBullet(Vector3 playerFirePosition)
+    private void BulletAddList(int magicnumber, List<GameObject> gameObjects, GameObject bulletPrefab)
     {
-        // 필요하다면 여기서 생성 이펙트도 생성하고
-        // 필요하다면 인자값으로 대미지도 받아서 넘겨주고...
-
-        // 1. 탄창 안에 있는 총알들 중에서
-        for (int i = 0; i < PoolSize; i++)
+        // 수신 매개변수만큼 총알을 생성해서 리스트에 추가
+        for (int i = 0; i < magicnumber; i++)
         {
-            GameObject bulletObject = _bulletObjectPool[i];
-
-            // 2. 비활성화 된 총알 하나를 찾아
-            if (bulletObject.activeInHierarchy == false)
-            {
-                // 3. 위치를 수정하고, 활성화한다
-                bulletObject.transform.position = playerFirePosition;
-                bulletObject.SetActive(true);
-
-                // 4. 총알 반환
-                return bulletObject;
-            }
+            gameObjects.Add(Instantiate(bulletPrefab, transform));
+            // 비활성화
+            gameObjects[i].SetActive(false);
         }
-
-        Debug.LogWarning("탄창이 부족합니다!");
-        return null;
     }
-    public GameObject MakeSubBullet(Vector3 position)
+
+    public void MakePlayerBullet(Vector3 playerFirePosition)
     {
-        for (int i = 0; i < PoolSize; i++)
+        for (int i = 0; i < _playerBulletList.Count; i++)
         {
-            GameObject subBulletObject = _subBulletObjectPool[i];
-            if (subBulletObject.activeInHierarchy == false)
+            if (_playerBulletList[i].activeInHierarchy == false)
             {
-                subBulletObject.transform.position = position;
-                subBulletObject.SetActive(true);
-                return subBulletObject;
+                _playerBulletList[i].transform.position = playerFirePosition;
+                _playerBulletList[i].SetActive(true);
+                return; // 하나 활성화 시키고 종료. return 안 하면 모든 비활성화 된 총알이 다 활성화 됨
             }
         }
-        Debug.LogWarning("서브 탄창이 부족합니다!");
-        return null;
+        BulletAddList(_bonusPoolSize, _playerBulletList, BulletPrefab);
+    }
+
+    public void MakeSubBullet(Vector3 playerFirePosition)
+    {
+        for (int i = 0; i < _subBulletList.Count; i++)
+        {
+            if (_subBulletList[i].activeInHierarchy == false)
+            {
+                _subBulletList[i].transform.position = playerFirePosition;
+                _subBulletList[i].SetActive(true);
+                return; // 하나 활성화 시키고 종료. return 안 하면 모든 비활성화 된 총알이 다 활성화 됨
+            }
+        }
+        BulletAddList(_bonusPoolSize, _subBulletList, SubBulletPrefab);
     }
 
     // Todo: 펫 총알 풀링 적용하기
@@ -115,6 +121,21 @@ public class BulletFactory : MonoBehaviour
             }
         }
         Debug.LogWarning("보스 탄창이 부족합니다!");
+        return null;
+    }
+
+    public GameObject AAMakeBossBullet(Vector3 bossFirePosition)
+    {
+        for (int i = 0; i < _bossBulletList.Count; i++)
+        {
+            if (_bossBulletList[i].activeInHierarchy == false)
+            {
+                _bossBulletList[i].transform.position = bossFirePosition;
+                _bossBulletList[i].SetActive(true);
+                return _bossBulletList[i];
+            }
+        }
+        BulletAddList(_bonusPoolSize, _bossBulletList, BossBulletPrefab);
         return null;
     }
 }

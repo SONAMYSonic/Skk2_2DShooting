@@ -69,8 +69,8 @@ public class PlayerFire : MonoBehaviour
 
     private void FireBullet()
     {
-        BulletFactory.Instance.MakeBullet(FirePosition.position - new Vector3(_fireOffsetX, 0f, 0f));
-        BulletFactory.Instance.MakeBullet(FirePosition.position + new Vector3(_fireOffsetX, 0f, 0f));
+        BulletFactory.Instance.MakePlayerBullet(FirePosition.position - new Vector3(_fireOffsetX, 0f, 0f));
+        BulletFactory.Instance.MakePlayerBullet(FirePosition.position + new Vector3(_fireOffsetX, 0f, 0f));
     }
 
     private void SubFireBullet()

@@ -6,14 +6,14 @@ public class EnemyTrace : MonoBehaviour
     public GameObject Player;
 
     [Header("본인 능력치")]
-    private Enemy _enemy;
+    private Game.EnemySystem.Enemy _enemy;
 
     private void Start()
     {
         // 캐싱: 자주 쓰는 데이터를 미리 가까운 곳에 저장해두고 참조하는 것.
         // 플레이어 오브젝트 찾기.
         Player = GameObject.FindWithTag("Player");
-        _enemy = GetComponent<Enemy>();
+        _enemy = GetComponent<Game.EnemySystem.Enemy>();
     }
 
     void Update()

@@ -56,7 +56,7 @@ public class Study_Bullet : MonoBehaviour
             return;
 
         // GetComponent는 게임오브젝트에 붙어있는 컴포넌트를 가져올 수 있다
-        Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+        Game.EnemySystem.Enemy enemy = collision.gameObject.GetComponent<Game.EnemySystem.Enemy>();
 
         // 객체간의 상호 작용을 할 때: 묻지말고 시켜라
         enemy.Hit(Damage);

@@ -71,11 +71,11 @@ public class Bullet : MonoBehaviour
 
         if (collision.CompareTag("Enemy") == true)
         {
-            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+            Game.EnemySystem.Enemy enemy = collision.gameObject.GetComponent<Game.EnemySystem.Enemy>();
             if (is_SubBullet == false)
-                enemy.GetComponent<Enemy>().Hit(Damage_Main);
+                enemy.Hit(Damage_Main);
             else
-                enemy.GetComponent<Enemy>().Hit(Damage_Sub);
+                enemy.Hit(Damage_Sub);
         }
         else if (collision.CompareTag("Boss"))
         {
@@ -88,12 +88,12 @@ public class Bullet : MonoBehaviour
 
         if (collision.CompareTag("EnemySide") == true)
         {
-            Enemy enemy = collision.gameObject.GetComponentInParent<Enemy>();
+            Game.EnemySystem.Enemy enemy = collision.gameObject.GetComponentInParent<Game.EnemySystem.Enemy>();
             Debug.Log("빗맞았다!");
             if (is_SubBullet == false)  // 빗맞은 메인 총알
-                enemy.GetComponent<Enemy>().Hit(Damage_Main * MissDamageMultiplier); // 적 체력 메인
+                enemy.Hit(Damage_Main * MissDamageMultiplier); // 적 체력 메인
             else  // 빗맞은 서브 총알
-                enemy.GetComponent<Enemy>().Hit(Damage_Sub * MissDamageMultiplier); // 적 체력 서브
+                enemy.Hit(Damage_Sub * MissDamageMultiplier); // 적 체력 서브
         }
 
         gameObject.SetActive(false); // 총알 비활성화

@@ -1,10 +1,10 @@
-using System;
 using UnityEngine;
+using Game.EnemySystem;
 
 public class EnemyMove : MonoBehaviour
 {
     [Header("본인 능력치")]
-    private Enemy _enemy;
+    private Game.EnemySystem.Enemy _enemy;
 
     public enum EEnemyType
     {
@@ -20,7 +20,7 @@ public class EnemyMove : MonoBehaviour
     {
         // 캐싱: 자주 쓰는 데이터를 미리 가까운 곳에 저장해두고 참조하는 것
         // 플레이어 오브젝트 찾기
-        _enemy = gameObject.GetComponent<Enemy>();
+        _enemy = gameObject.GetComponent<Game.EnemySystem.Enemy>();
     }
 
     // Update is called once per frame

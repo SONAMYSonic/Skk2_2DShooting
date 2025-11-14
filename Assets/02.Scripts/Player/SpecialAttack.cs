@@ -1,4 +1,5 @@
 using UnityEngine;
+using Game.EnemySystem;
 
 public class SpecialAttack : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class SpecialAttack : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            collision.GetComponent<Enemy>().EnemyDead();
+            collision.GetComponent<Game.EnemySystem.Enemy>().EnemyDead();
         }
     }
 
